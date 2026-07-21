@@ -1,0 +1,61 @@
+<div class="nk-camping-sheet">
+
+  {{!-- -- Participants (always visible) ---------------------------- --}}
+  <section class="nk-camp-section nk-camp-section-participants">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-users"></i> Participants
+      {{#if isGM}}
+      <button type="button" class="nk-camp-clear-party-btn" data-action="clear-party"
+              title="Remove all participants">
+        <i class="fa-solid fa-trash-can"></i>
+      </button>
+      {{/if}}
+    </h3>
+    <div class="nk-camp-drop-zone {{#unless participants.length}}nk-camp-drop-empty{{/unless}}"
+         title="Drag actors from the Actors panel to add them">
+      {{#if participants.length}}
+        <ul class="nk-camp-participants">
+          {{#each participants}}
+          <li class="nk-camp-participant">
+            <img class="nk-camp-avatar" src="{{this.img}}" alt="{{this.name}}" />
+            <span class="nk-camp-participant-name">{{this.name}}</span>
+            <button type="button" class="nk-camp-remove-btn"
+                    data-action="remove-participant"
+                    data-uuid="{{this.actorUuid}}"
+                    title="Remove from group">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <div class="nk-camp-drop-hint">
+          <i class="fa-solid fa-arrow-down-to-bracket"></i>
+          Drop actors here to add participants
+        </div>
+      {{/if}}
+    </div>
+  </section>
+
+  {{!-- -- Tab Bar ------------------------------------------------ --}}
+  <div class="nk-tab-bar">
+    <button type="button" class="nk-tab-btn {{#if (eq activeTab 'travel')}}nk-tab-active{{/if}}"
+            data-tab="travel">
+      <i class="fa-solid fa-route"></i> Travel
+    </button>
+    <button type="button" class="nk-tab-btn {{#if (eq activeTab 'camp')}}nk-tab-active{{/if}}"
+            data-tab="camp">
+      <i class="fa-solid fa-campground"></i> Camp
+    </button>
+  </div>
+
+  {{!-- -- Tab Content ------------------------------------------ --}}
+  <section class="nk-tab-content {{#unless (eq activeTab 'travel')}}hidden{{/unless}}">
+    {{> "nk-camping-travel-tab"}}
+  </section>
+
+  <section class="nk-tab-content {{#unless (eq activeTab 'camp')}}hidden{{/unless}}">
+    {{> "nk-camping-camp-tab"}}
+  </section>
+
+</div>

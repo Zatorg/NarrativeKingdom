@@ -1,0 +1,178 @@
+<div class="nk-camp-camp-tab">
+
+  {{!-- Zone Selection --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-map-location-dot"></i> Camping Zone
+    </h3>
+    <div class="nk-camp-zone-row">
+      <select name="camp-zone" class="nk-camp-select nk-camp-select-zone">
+        {{#each zones}}
+        <option value="{{this.zone}}" {{#if (eq this.zone ../zoneIndex)}}selected{{/if}}>
+          {{this.zone}} — {{this.name}}
+        </option>
+        {{/each}}
+      </select>
+      <div class="nk-camp-dc-badges">
+        <span class="nk-camp-dc-badge" title="Zone DC (Prepare Camp &amp; Cook Meal)">
+          Zone DC <strong>{{zoneDC}}</strong>
+        </span>
+        <span class="nk-camp-dc-badge nk-camp-dc-encounter" title="Encounter DC (Night Watch flat check)">
+          Encounter DC <strong>{{encounterDC}}</strong>{{#if prepareDCMod}} (base {{baseEncounterDC}}{{#if (gte prepareDCMod 0)}}+{{/if}}{{prepareDCMod}}){{/if}}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {{!-- Roll 1 — Prepare Camp --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-campground"></i>
+      Prepare Camp
+      <span class="nk-camp-dc-inline">vs DC <strong>{{roll1.dc}}</strong></span>
+      <span class="nk-camp-time-note" title="Setting up camp takes 1 hour"><i class="fa-regular fa-clock"></i> 1h</span>
+    </h3>
+    <div class="nk-camp-roll-row">
+      <label class="nk-camp-label">Character</label>
+      <select name="roll1-actor" class="nk-camp-select">
+        <option value="">— pick a character —</option>
+        {{#each participants}}
+        <option value="{{this.actorUuid}}" {{#if (eq this.actorUuid ../roll1.actorUuid)}}selected{{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    {{#if roll1.skills.length}}
+    <div class="nk-camp-roll-row">
+      <label class="nk-camp-label">Skill</label>
+      <select name="roll1-skill" class="nk-camp-select">
+        {{#each roll1.skills}}
+        <option value="{{this.slug}}" {{#if (eq this.slug ../roll1.skill)}}selected{{/if}}>
+          {{this.label}} ({{#if (gte this.mod 0)}}+{{/if}}{{this.mod}})
+        </option>
+        {{/each}}
+      </select>
+    </div>
+    {{else if roll1.actorUuid}}
+    <p class="nk-camp-warn">Selected character has no Survival or Stealth skill.</p>
+    {{/if}}
+    <div class="nk-camp-outcomes-hint">
+      <span class="nk-crit-success">CS</span> +2 &nbsp;|&nbsp;
+      <span class="nk-success">S</span> ±0 &nbsp;|&nbsp;
+      <span class="nk-failure">F</span> −2 &nbsp;|&nbsp;
+      <span class="nk-crit-failure">CF</span> −4
+      <em> to tonight's Encounter DC</em>
+    </div>
+    <button type="button" class="nk-camp-roll-btn" data-action="roll-prepare-camp"
+            {{#unless roll1.canRoll}}disabled{{/unless}}>
+      <i class="fa-solid fa-dice-d20"></i> Roll Prepare Camp
+    </button>
+  </section>
+
+  {{!-- Roll 2 — Cook Meal --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-bowl-food"></i>
+      Cook Meal
+      <span class="nk-camp-dc-inline">vs DC <strong>{{roll2.dc}}</strong></span>
+      <span class="nk-camp-time-note" title="Cooking takes 1 hour"><i class="fa-regular fa-clock"></i> 1h</span>
+    </h3>
+    <div class="nk-camp-roll-row">
+      <label class="nk-camp-label">Character</label>
+      <select name="roll2-actor" class="nk-camp-select">
+        <option value="">— pick a character —</option>
+        {{#each participants}}
+        <option value="{{this.actorUuid}}" {{#if (eq this.actorUuid ../roll2.actorUuid)}}selected{{/if}}>{{this.name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    {{#if roll2.skills.length}}
+    <div class="nk-camp-roll-row">
+      <label class="nk-camp-label">Skill</label>
+      <select name="roll2-skill" class="nk-camp-select">
+        {{#each roll2.skills}}
+        <option value="{{this.slug}}" {{#if (eq this.slug ../roll2.skill)}}selected{{/if}}>
+          {{this.label}} ({{#if (gte this.mod 0)}}+{{/if}}{{this.mod}})
+        </option>
+        {{/each}}
+      </select>
+    </div>
+    {{else if roll2.actorUuid}}
+    <p class="nk-camp-warn">Selected character has no Survival, Crafting, or Cooking Lore skill.</p>
+    {{/if}}
+    <div class="nk-camp-outcomes-hint">
+      <span class="nk-crit-success">CS</span> Well-Fed &nbsp;|&nbsp;
+      <span class="nk-success">S</span> Good Meal &nbsp;|&nbsp;
+      <span class="nk-failure">F</span> Normal &nbsp;|&nbsp;
+      <span class="nk-crit-failure">CF</span> Sickened 1
+    </div>
+    <p class="nk-camp-ration-note">
+      <i class="fa-solid fa-drumstick-bite"></i> Cooking a meal consumes <strong>1 ration</strong> per character.
+    </p>
+    <button type="button" class="nk-camp-roll-btn" data-action="roll-cook-meal"
+            {{#unless roll2.canRoll}}disabled{{/unless}}>
+      <i class="fa-solid fa-dice-d20"></i> Roll Cook Meal
+    </button>
+  </section>
+
+  {{!-- Roll 3 — Night Watch --}}
+  <section class="nk-camp-section nk-camp-section-watch">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-moon"></i>
+      Night Watch
+      {{#if isGM}}
+      <span class="nk-camp-dc-inline">Flat Check vs DC <strong>{{encounterDC}}</strong>{{#if prepareDCMod}} <em>({{#if (gte prepareDCMod 0)}}+{{/if}}{{prepareDCMod}} from camp)</em>{{/if}}</span>
+      <span class="nk-camp-gm-badge" title="Roll result is GM-only"><i class="fa-solid fa-eye-slash"></i> GM</span>
+      {{/if}}
+    </h3>
+    <div class="nk-camp-watch-row">
+      <label class="nk-camp-watch-label">
+        <input type="checkbox" name="camp-keep-watch" {{#if keepWatch}}checked{{/if}} />
+        Keep a night watch
+      </label>
+    </div>
+    <div class="nk-camp-rest-display">
+      <i class="fa-solid fa-bed"></i>
+      Total rest time: <strong>{{restHours}}h{{#if restMins}} {{restMins}}min{{/if}}</strong>
+      {{#unless keepWatch}}
+        <span class="nk-camp-rest-note">(unguarded)</span>
+      {{else if (eq participants.length 0)}}
+        <span class="nk-camp-rest-note">(add participants)</span>
+      {{else if (eq participants.length 1)}}
+        <span class="nk-camp-rest-note">(solo watch)</span>
+      {{/unless}}
+    </div>
+    <button type="button" class="nk-camp-roll-btn nk-camp-rest-btn" data-action="rest-party"
+            {{#unless participants.length}}disabled{{/unless}}
+            title="Run PF2e Rest for the Night for all participants (restores HP, recovers conditions)">
+      <i class="fa-solid fa-bed"></i> Rest for the Night
+    </button>
+    {{#if isGM}}
+    <div class="nk-camp-gm-divider"></div>
+    <div class="nk-camp-outcomes-hint">
+      <span class="nk-success">Meets DC</span> — Encounter &nbsp;|&nbsp;
+      <span class="nk-crit-success">Below DC</span> — Quiet night
+    </div>
+    <button type="button" class="nk-camp-roll-btn nk-camp-roll-btn-watch"
+            data-action="roll-flat-check">
+      <i class="fa-solid fa-dice-d20"></i> Roll Flat Check (DC {{encounterDC}}{{#if prepareDCMod}}, {{#if (gte prepareDCMod 0)}}+{{/if}}{{prepareDCMod}} from camp{{/if}})
+    </button>
+    {{#if zoneIndex}}
+    <button type="button" class="nk-camp-roll-btn nk-camp-roll-btn-encounter"
+            data-action="roll-encounter-table">
+      <i class="fa-solid fa-dragon"></i> Roll Encounter Table
+    </button>
+    {{/if}}
+    {{/if}}
+  </section>
+
+  {{!-- New Night (GM only) --}}
+  {{#if isGM}}
+  <section class="nk-camp-section nk-camp-section-new-night">
+    <button type="button" class="nk-camp-new-night-btn" data-action="new-night"
+            title="Clear all meal effects from participants and reset the camp DC modifier">
+      <i class="fa-solid fa-sun"></i> New Night — Clear Effects
+    </button>
+  </section>
+  {{/if}}
+
+</div>

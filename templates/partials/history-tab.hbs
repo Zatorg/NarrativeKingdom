@@ -1,0 +1,67 @@
+<div class="nk-history-tab">
+  <h2>Turn History</h2>
+
+  {{#if turnHistory.length}}
+  <div class="nk-history-list">
+    {{#each turnHistory}}
+    <details class="nk-history-entry">
+      <summary class="nk-history-summary">
+        <span class="nk-history-turn">Turn {{this.number}}</span>
+        {{#if this.date}}<span class="nk-history-date">{{this.date}}</span>{{/if}}
+        <span class="nk-history-event-pill">{{this.event}}</span>
+        {{#if this.absentCount}}<span class="nk-history-absent">{{this.absentCount}} absent</span>{{/if}}
+      </summary>
+      <div class="nk-history-body">
+
+        {{#if this.completedProjects.length}}
+        <div class="nk-history-section">
+          <h4>Completed Projects</h4>
+          <ul class="nk-history-items">
+            {{#each this.completedProjects}}
+            <li>
+              <strong>{{this.name}}</strong>
+              <span class="nk-history-meta">{{this.leaderName}} · {{this.complexity}}-seg · +{{this.xpReward}} XP</span>
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#if this.completedEvents.length}}
+        <div class="nk-history-section">
+          <h4>Resolved Events</h4>
+          <ul class="nk-history-items">
+            {{#each this.completedEvents}}
+            <li>
+              <div class="nk-history-event-row">
+                <strong>{{this.name}}</strong>
+                <span class="nk-history-outcome-badge {{this.outcomeResult}}">
+                  {{#if (eq this.outcomeResult "success")}}✔ Success{{else if (eq this.outcomeResult "neutral")}}◐ Neutral{{else}}✘ Failure{{/if}}
+                </span>
+              </div>
+              {{#if this.outcomeRp}}<p class="nk-history-outcome-text">{{this.outcomeRp}}</p>{{/if}}
+              {{#if ../../isGM}}{{#if this.outcomeGm}}<p class="nk-history-outcome-gm"><span class="nk-gm-tag">GM</span> {{this.outcomeGm}}</p>{{/if}}{{/if}}
+              {{#unless this.outcomeRp}}{{#unless this.outcomeGm}}{{#if this.outcomeText}}<p class="nk-history-outcome-text">{{this.outcomeText}}</p>{{/if}}{{/unless}}{{/unless}}
+              {{#if this.notes}}
+              {{#if ../../isGM}}
+              <p class="nk-history-event-notes"><i class="fa-solid fa-note-sticky"></i> {{this.notes}}</p>
+              {{/if}}
+              {{/if}}
+            </li>
+            {{/each}}
+          </ul>
+        </div>
+        {{/if}}
+
+        {{#unless this.completedProjects.length}}{{#unless this.completedEvents.length}}
+        <p class="nk-empty">No projects or events completed this turn.</p>
+        {{/unless}}{{/unless}}
+
+      </div>
+    </details>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="nk-empty">No turns recorded yet.</p>
+  {{/if}}
+</div>

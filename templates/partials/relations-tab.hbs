@@ -1,0 +1,70 @@
+<div class="nk-relations-tab">
+  <div class="nk-section-header">
+    <h2>Faction Relations</h2>
+    <button type="button" class="nk-btn small" data-action="add-faction">+ Add Faction</button>
+  </div>
+
+  {{#if kingdom.factions.length}}
+  <div class="nk-factions-list">
+    {{#each kingdom.factions}}
+    <div class="nk-faction-card standing-{{this.standingKey}}" data-faction-id="{{this.id}}">
+      <div class="nk-faction-header">
+        <input type="text" name="faction-name-{{this.id}}" value="{{this.name}}" placeholder="Faction name" class="nk-faction-name" />
+        <span class="nk-standing-badge standing-{{this.standingKey}}" title="PF2e reputation standing ({{this.reputation}})">{{this.standingLabel}} · {{this.reputation}}</span>
+        <button type="button" class="nk-btn danger small" data-action="remove-faction" data-faction-id="{{this.id}}">✕</button>
+      </div>
+
+      <div class="nk-faction-meta">
+        <label class="nk-faction-type-field">Relation type
+          <input type="text" name="faction-type-{{this.id}}" value="{{this.relationType}}" placeholder="e.g. Trade partner, Diplomatic ally" list="nk-relation-types" />
+        </label>
+        <div class="nk-faction-rep" title="Reputation Points (−50…50)">
+          <span class="nk-rep-label">Reputation</span>
+          <button type="button" class="nk-btn small secondary" data-action="faction-rep" data-faction-id="{{this.id}}" data-delta="-1" title="−1">−</button>
+          <input type="number" name="faction-rep-{{this.id}}" value="{{this.reputation}}" min="-50" max="50" class="nk-rep-input" />
+          <button type="button" class="nk-btn small secondary" data-action="faction-rep" data-faction-id="{{this.id}}" data-delta="1" title="+1">+</button>
+        </div>
+      </div>
+
+      <div class="nk-faction-notes-field">
+        <label class="nk-faction-sublabel">Notes</label>
+        <textarea name="faction-notes-{{this.id}}" class="nk-faction-notes" placeholder="Standing, goals, leverage, key contacts…">{{this.notes}}</textarea>
+      </div>
+
+      <div class="nk-faction-history">
+        <div class="nk-section-header nk-faction-history-header">
+          <h4>History</h4>
+          <button type="button" class="nk-btn small" data-action="faction-log" data-faction-id="{{this.id}}">+ Log Event</button>
+        </div>
+        {{#if this.history.length}}
+        <ul class="nk-faction-log">
+          {{#each this.history}}
+          <li class="nk-faction-log-entry">
+            <input type="text" name="faction-date-{{this.id}}" value="{{this.date}}" placeholder="Date" class="nk-faction-log-date-input" title="In-world date (editable)" />
+            <input type="text" name="faction-event-{{this.id}}" value="{{this.text}}" placeholder="What happened…" class="nk-faction-log-text" />
+            <button type="button" class="nk-btn danger small" data-action="faction-log-remove" data-faction-id="{{../id}}" data-entry-id="{{this.id}}" title="Remove entry">✕</button>
+          </li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <p class="nk-empty">No history logged yet.</p>
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="nk-empty-state">No factions tracked yet. Use <strong>+ Add Faction</strong> to start tracking relations &amp; reputation.</p>
+  {{/if}}
+
+  <datalist id="nk-relation-types">
+    <option value="Trade partner"></option>
+    <option value="Diplomatic ally"></option>
+    <option value="Military ally"></option>
+    <option value="Rival"></option>
+    <option value="Enemy"></option>
+    <option value="Vassal"></option>
+    <option value="Patron"></option>
+    <option value="Neutral"></option>
+  </datalist>
+</div>

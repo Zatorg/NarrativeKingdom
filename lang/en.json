@@ -1,0 +1,22 @@
+{
+  "NarrativeKingdom.Title": "Narrative Kingdom Management",
+  "NarrativeKingdom.KingdomName": "Kingdom Name",
+  "NarrativeKingdom.Level": "Kingdom Level",
+  "NarrativeKingdom.XP": "XP",
+  "NarrativeKingdom.LevelUp": "Level Up",
+  "NarrativeKingdom.PartyLevel": "Party Level",
+  "NarrativeKingdom.HexesClaimed": "Hexes Claimed",
+  "NARRATIVEKINGDOM.OpenSheet": "Kingdom",
+  "NarrativeKingdom.Settlements": "Settlements",
+  "NarrativeKingdom.SettlementName": "Settlement Name",
+  "NarrativeKingdom.SettlementLocation": "Location",
+  "NarrativeKingdom.SettlementPopulation": "Population",
+  "NarrativeKingdom.SettlementImportantPeople": "Important People",
+  "NarrativeKingdom.SettlementStage": "Stage",
+  "NarrativeKingdom.SettlementStageVillage": "Village",
+  "NarrativeKingdom.SettlementStageTown": "Town",
+  "NarrativeKingdom.SettlementStageCity": "City",
+  "NarrativeKingdom.SettlementStageMetropolis": "Metropolis",
+  "NarrativeKingdom.SettlementCapital": "Capital",
+  "NarrativeKingdom.SettlementNoCapital": "Your kingdom has no capital! Designate a settlement as the capital."
+}

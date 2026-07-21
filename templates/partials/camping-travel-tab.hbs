@@ -1,0 +1,87 @@
+<div class="nk-camp-travel-tab">
+
+  {{!-- Current date from PF2e world clock --}}
+  {{#if currentDate}}
+  <div class="nk-travel-date">
+    <i class="fa-solid fa-calendar-days"></i> {{currentDate}}
+  </div>
+  {{/if}}
+
+  {{!-- Party Speed --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-person-walking"></i> Party Speed
+    </h3>
+    <div class="nk-travel-speed-row">
+      <span class="nk-travel-inferred">
+        Inferred: <strong>{{travel.inferredSpeed}} ft</strong>
+        {{#unless participants.length}}<em class="nk-camp-rest-note">(no participants)</em>{{/unless}}
+      </span>
+      <label class="nk-travel-override-label" title="Override if mounts, magic, or encumbrance applies">
+        Override
+        <input type="number" name="travel-speed" class="nk-travel-speed-input"
+               min="5" step="5"
+               value="{{travel.speedOverride}}"
+               placeholder="ft" />
+      </label>
+    </div>
+    <div class="nk-travel-apd">
+      Activities per day: <strong>{{travel.apdDisplay}}</strong>
+      {{#if travel.forcedMarch}}<span class="nk-camp-rest-note">(forced march +1)</span>{{/if}}
+      {{#if travel.layOfLand}}<span class="nk-camp-rest-note">(Lay of the Land +1)</span>{{/if}}
+    </div>
+  </section>
+
+  {{!-- Terrain --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-mountain"></i> Terrain
+    </h3>
+    <div class="nk-travel-terrain-row">
+      <select name="travel-terrain" class="nk-camp-select">
+        <option value="open"              {{#if (eq travel.terrainType "open")}}selected{{/if}}>Open (plains, road)</option>
+        <option value="difficult"         {{#if (eq travel.terrainType "difficult")}}selected{{/if}}>Difficult (forest, desert, hills)</option>
+        <option value="greater-difficult" {{#if (eq travel.terrainType "greater-difficult")}}selected{{/if}}>Greater Difficult (mountain, swamp)</option>
+      </select>
+    </div>
+    <div class="nk-travel-terrain-row" style="margin-top:6px; gap:16px;">
+      <label class="nk-travel-check-label" title="Road reduces terrain cost by one step">
+        <input type="checkbox" name="travel-road" {{#if travel.road}}checked{{/if}} />
+        Road
+      </label>
+      <label class="nk-travel-check-label" title="Gain +1 Travel activity but it is the only activity allowed today">
+        <input type="checkbox" name="travel-forced-march" {{#if travel.forcedMarch}}checked{{/if}} />
+        Forced March
+      </label>
+    </div>
+    <div class="nk-travel-cost-row">
+      Hex travel cost: <strong>{{travel.travelCost}} activit{{#if (eq travel.travelCost 1)}}y{{else}}ies{{/if}}</strong>
+    </div>
+  </section>
+
+  {{!-- Activities --}}
+  <section class="nk-camp-section">
+    <h3 class="nk-camp-heading">
+      <i class="fa-solid fa-list-check"></i> Activities
+      {{#if isGM}}
+      <button type="button" class="nk-camp-clear-party-btn" data-action="reset-activities"
+              title="Reset to 0">
+        <i class="fa-solid fa-rotate-left"></i>
+      </button>
+      {{/if}}
+    </h3>
+    <div class="nk-travel-pips">
+      {{#each travel.pips}}
+      <span class="nk-travel-pip {{#if this.filled}}nk-travel-pip-filled{{/if}}"></span>
+      {{/each}}
+    </div>
+    <div class="nk-travel-pip-label">{{travel.activitiesUsed}} / {{travel.activitiesTotal}} used</div>
+    {{#if isGM}}
+    <button type="button" class="nk-camp-roll-btn" data-action="use-activity"
+            {{#if (eq travel.activitiesUsed travel.activitiesTotal)}}disabled{{/if}}>
+      <i class="fa-solid fa-plus"></i> Use Activity
+    </button>
+    {{/if}}
+  </section>
+
+</div>

@@ -1,0 +1,114 @@
+<div class="nk-events-tab">
+  <h2>Kingdom Events</h2>
+
+  {{#if kingdom.earnIncomePerDay}}
+  <p class="nk-earn-income-ref">Earn Income at kingdom level {{kingdom.level}}: up to <strong>{{kingdom.earnIncomePerDay}} gp/day</strong> ({{kingdom.earnIncomePerWeek}} gp/week) per leader. <span class="nk-hint">Max for your level (master 7+, legendary 15+).</span></p>
+  {{/if}}
+
+  <div class="nk-active-events">
+    <h3>Active Events</h3>
+    {{#if kingdom.activeEvents.length}}
+      {{#each kingdom.activeEvents}}
+      <div class="nk-event-card {{#if this.resolved}}resolved{{/if}}" data-event-id="{{this.id}}">
+        <div class="nk-event-header">
+          <input type="text" name="event-name-{{this.id}}" value="{{this.name}}" placeholder="Event Name" />
+          <span class="nk-complexity-badge c{{this.clockSize}}">{{this.clockSize}}-seg</span>
+          {{#if this.eventDC}}<span class="nk-event-dc" title="Event level {{this.eventLevel}} (kingdom {{#if (gte this.levelMod 0)}}+{{/if}}{{this.levelMod}}) — roll the event's checks against this DC">DC {{this.eventDC}}</span>{{/if}}
+          {{#unless this.resolved}}
+          <button type="button" class="nk-btn danger small" data-action="remove-event" data-event-id="{{this.id}}">✕</button>
+          {{/unless}}
+        </div>
+        <div class="nk-clock" data-segments="{{this.clockSize}}" data-green-filled="{{this.greenFilled}}" data-red-filled="{{this.redFilled}}">
+          {{> "nk-clock" segments=this.clockSize greenFilled=this.greenFilled redFilled=this.redFilled projectId=this.id eventMode=true}}
+        </div>
+        <div class="nk-event-actions">
+          {{#unless this.resolved}}
+          <div class="nk-roll-buttons">
+            <button type="button" class="nk-btn crit-success" data-action="event-roll" data-event-id="{{this.id}}" data-result="crit-success">Crit (+2 🟢)</button>
+            <button type="button" class="nk-btn success" data-action="event-roll" data-event-id="{{this.id}}" data-result="success">Success (+1 🟢)</button>
+            <button type="button" class="nk-btn failure" data-action="event-roll" data-event-id="{{this.id}}" data-result="failure">Failure (+1 🔴)</button>
+            <button type="button" class="nk-btn crit-failure" data-action="event-roll" data-event-id="{{this.id}}" data-result="crit-failure">Crit Fail (+2 🔴)</button>
+          </div>
+          {{else}}
+          <div class="nk-resolved-block {{this.outcomeResult}}">
+            <span class="nk-complete-badge">Resolved — {{#if (eq this.outcomeResult "success")}}✔ Success{{else if (eq this.outcomeResult "neutral")}}◐ Neutral{{else}}✘ Failure{{/if}} · +{{#if this.xpAwarded}}{{this.xpAwarded}}{{else}}3{{/if}} XP</span>
+            {{#if this.resolvedView.rp}}<p class="nk-resolved-rp">{{this.resolvedView.rp}}</p>{{/if}}
+            {{#if ../isGM}}{{#if this.resolvedView.gm}}<p class="nk-resolved-gm"><span class="nk-gm-tag">GM</span> {{this.resolvedView.gm}}</p>{{/if}}{{/if}}
+          </div>
+          {{/unless}}
+        </div>
+        {{#if this.description}}
+        <details class="nk-event-details">
+          <summary>Event Details</summary>
+          <div class="nk-event-content-body">
+            {{#if this.subtitle}}<h4 class="subtitle">{{this.subtitle}}</h4>{{/if}}
+            {{#if this.traits}}
+            <ul class="traits">
+              {{#each this.traits}}<li>{{this}}</li>{{/each}}
+            </ul>
+            {{/if}}
+            {{#if this.location}}<p class="nk-location"><strong>Location</strong> {{this.location}}</p>{{/if}}
+            <p class="nk-description">{{this.description}}</p>
+            {{#if this.checks}}
+            <div class="nk-event-checks">
+              <p class="nk-checks-label"><strong>Suggested Checks</strong></p>
+              <ul class="nk-checks-list">
+                {{#each this.checks}}
+                <li><strong>{{this.name}}</strong> — {{this.description}}</li>
+                {{/each}}
+              </ul>
+            </div>
+            {{/if}}
+            {{#unless this.resolved}}
+            {{#if ../isGM}}
+            {{#if this.outcomes}}
+            <ul class="nk-outcomes">
+              <li class="success"><strong>Success</strong> {{this.outcomesView.success.gm}}</li>
+              {{#if this.outcomesView.neutral.gm}}<li class="neutral"><strong>Neutral</strong> {{this.outcomesView.neutral.gm}}</li>{{/if}}
+              <li class="failure"><strong>Failure</strong> {{this.outcomesView.failure.gm}}</li>
+            </ul>
+            {{/if}}
+            {{/if}}
+            {{/unless}}
+            {{#if ../isGM}}
+            {{#if this.resolution}}<p class="nk-resolution"><strong>Resolution</strong> {{this.resolution}}</p>{{/if}}
+            {{#if this.special}}<p class="nk-special"><strong>Special</strong> {{this.special}}</p>{{/if}}
+            {{/if}}
+          </div>
+        </details>
+        {{else if this.content}}
+        <details class="nk-event-details">
+          <summary>Event Details</summary>
+          <div class="nk-event-content-body">{{{this.content}}}</div>
+        </details>
+        {{/if}}
+        <div class="nk-event-notes nk-notes-field">
+          <div class="nk-notes-display {{#unless this.notes}}empty{{/unless}}" title="Click to edit">{{{this.notesEnriched}}}</div>
+          <textarea name="event-notes-{{this.id}}" class="nk-notes-textarea hidden" placeholder="GM Notes…">{{this.notes}}</textarea>
+        </div>
+      </div>
+      {{/each}}
+    {{else}}
+      <p class="nk-empty">No active events.</p>
+    {{/if}}
+  </div>
+
+  <div class="nk-add-event">
+    <h3>Add New Event</h3>
+    <div class="nk-event-clock-info">
+      <p>Clock size: <strong>{{kingdom.eventClockSize}}</strong> segments
+        {{#if kingdom.hasNothingCanStopUs}}· Events start with <strong>2 🟢</strong> (Nothing Can Stop Us!){{else if kingdom.hasProblemSolvers}}· Events start with <strong>1 🟢</strong> (Problem Solvers){{/if}}
+      </p>
+    </div>
+    <div class="nk-event-picker">
+      <select class="nk-event-catalog-select">
+        <option value="">&mdash; Custom Event &mdash;</option>
+        {{#each eventCatalog}}
+        <option value="{{this.name}}">{{this.name}}</option>
+        {{/each}}
+      </select>
+      <button type="button" class="nk-btn" data-action="add-event">Add Selected</button>
+      <button type="button" class="nk-btn secondary" data-action="add-random-event">&#x1F3B2; Roll Random</button>
+    </div>
+  </div>
+</div>

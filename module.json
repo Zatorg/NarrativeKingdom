@@ -1,0 +1,61 @@
+{
+  "id": "narrative-kingdom",
+  "title": "Narrative Kingdom Management",
+  "description": "<p>A lighter, narrative take on the PF2e Kingmaker kingdom subsystem. The idea is to have a more hands-on and less bloated set of rules that allow for more creative roleplay. It integrates into the official Kingmaker module but does not require it.</p>",
+  "version": "1.0.3",
+  "url": "https://github.com/Zatorg/NarrativeKingdom",
+  "manifest": "https://github.com/Zatorg/NarrativeKingdom/releases/latest/download/module.json",
+  "download": "https://github.com/Zatorg/NarrativeKingdom/releases/latest/download/module.zip",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "14",
+    "maximum": "14"
+  },
+  "authors": [
+    {
+      "name": "Lemon Supreme",
+      "flags": {}
+    }
+  ],
+  "esmodules": [
+    "scripts/narrative-kingdom.mjs"
+  ],
+  "styles": [
+    {
+      "src": "styles/narrative-kingdom.css"
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json",
+      "flags": {}
+    }
+  ],
+  "socket": true,
+  "relationships": {
+    "recommends": [
+      {
+        "id": "pf2e-kingmaker",
+        "type": "module",
+        "reason": "Adds live claimed-hex tracking, hex-map exploration colors, camping zones, and the Create Kingdom button. Optional — without it, enter your hex count manually in GM Settings."
+      }
+    ]
+  },
+  "packs": [
+    {
+      "name": "camping-effects",
+      "label": "Camping Effects",
+      "path": "packs/camping-effects",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "system": "pf2e",
+      "flags": {}
+    }
+  ],
+  "flags": {}
+}

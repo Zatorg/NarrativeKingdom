@@ -1,0 +1,33 @@
+<div class="nk-catalog-tab">
+  <div class="nk-catalog-header">
+    <h2>Event Catalog</h2>
+    <div class="nk-catalog-actions">
+      <button type="button" class="nk-btn" data-action="catalog-add">+ Add Event</button>
+      <button type="button" class="nk-btn secondary" data-action="catalog-import">Import…</button>
+      <button type="button" class="nk-btn secondary" data-action="catalog-export">Export</button>
+      <button type="button" class="nk-btn secondary" data-action="catalog-reset">Clear All</button>
+    </div>
+  </div>
+
+  <div class="nk-catalog-list">
+    {{#each fullCatalog}}
+    <div class="nk-catalog-row">
+      <div class="nk-catalog-row-info">
+        <span class="nk-catalog-name">{{this.name}}</span>
+        {{#if this.subtitle}}<span class="nk-catalog-subtitle">{{this.subtitle}}</span>{{/if}}
+        {{#if this.traits}}
+        <span class="nk-catalog-traits">
+          {{#each this.traits}}<span class="nk-catalog-trait">{{this}}</span>{{/each}}
+        </span>
+        {{/if}}
+      </div>
+      <div class="nk-catalog-row-btns">
+        <button type="button" class="nk-btn small" data-action="catalog-edit" data-catalog-index="{{@index}}">Edit</button>
+        <button type="button" class="nk-btn danger small" data-action="catalog-remove" data-catalog-index="{{@index}}">✕</button>
+      </div>
+    </div>
+    {{else}}
+    <p class="nk-empty">No events yet — <strong>Add</strong> one, or <strong>Import</strong> a JSON event pack.</p>
+    {{/each}}
+  </div>
+</div>

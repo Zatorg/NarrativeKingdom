@@ -1,0 +1,14 @@
+{
+  "name": "narrative-kingdom",
+  "version": "1.0.3",
+  "description": "Narrative Kingdom Management — a simplified PF2e kingdom & warfare system for Foundry VTT.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "unpack": "node tools/packs.mjs unpack",
+    "pack": "node tools/packs.mjs pack"
+  },
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^3.0.4"
+  }
+}

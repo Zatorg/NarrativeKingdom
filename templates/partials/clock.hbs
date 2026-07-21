@@ -1,0 +1,17 @@
+{{!-- Clock partial --}}
+{{!-- Event mode (eventMode=true): segments are green / red / empty based on greenFilled + redFilled --}}
+{{!-- Project mode (default):      segments are filled / empty based on filled --}}
+{{#if eventMode}}
+<div class="nk-clock-segments" data-segments="{{segments}}" data-green-filled="{{greenFilled}}" data-red-filled="{{redFilled}}" data-project-id="{{projectId}}">
+  {{#nkTimes segments}}
+  <div class="nk-segment {{nkSegmentClass @index greenFilled redFilled}}" data-index="{{@index}}"></div>
+  {{/nkTimes}}
+</div>
+{{else}}
+<div class="nk-clock-segments" data-segments="{{segments}}" data-filled="{{filled}}" data-project-id="{{projectId}}">
+  {{#nkTimes segments}}
+  <div class="nk-segment {{#if (lt @index filled)}}filled{{/if}}" data-index="{{@index}}"></div>
+  {{/nkTimes}}
+</div>
+<span class="nk-clock-label">{{filled}} / {{segments}}</span>
+{{/if}}

@@ -1,0 +1,31 @@
+<div class="nk-leaders-tab">
+  <h2>Kingdom Leaders</h2>
+
+  <div class="nk-leaders-drop-zone">
+    <div class="nk-leaders-list">
+      {{#each kingdom.leaders}}
+      <div class="nk-leader-card" data-leader-index="{{@index}}">
+        <div class="nk-leader-header">
+          {{#if this.actorUuid}}<i class="fa-solid fa-user nk-actor-icon" title="Linked actor"></i>{{/if}}
+          <input type="text" name="leader-name-{{@index}}" value="{{this.name}}" placeholder="Leader Name" class="nk-leader-name" />
+          <input type="text" name="leader-role-{{@index}}" value="{{this.role}}" placeholder="Role (e.g. Ruler, Spymaster)" class="nk-leader-role" />
+          <button type="button" class="nk-btn danger small" data-action="remove-leader" data-leader-index="{{@index}}">✕</button>
+        </div>
+        <div class="nk-leader-stats">
+          <label>Attended Last Turn:
+            <input type="checkbox" name="leader-attended-{{@index}}" {{#if this.attendedTurn}}checked{{/if}} />
+          </label>
+          <label>Active Projects: <span>{{this.projectCount}} / 3</span></label>
+        </div>
+        <div class="nk-leader-notes nk-notes-field">
+          <div class="nk-notes-display {{#unless this.notes}}empty{{/unless}}" title="Click to edit">{{{this.notesEnriched}}}</div>
+          <textarea name="leader-notes-{{@index}}" class="nk-notes-textarea hidden" placeholder="Notes…">{{this.notes}}</textarea>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div class="nk-drop-hint">Drop an Actor here to add as leader, or
+      <button type="button" class="nk-btn secondary small" data-action="add-leader">Add Manually</button>
+    </div>
+  </div>
+</div>

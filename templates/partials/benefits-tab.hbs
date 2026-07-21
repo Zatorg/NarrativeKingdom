@@ -1,0 +1,28 @@
+<div class="nk-benefits-tab">
+  <h2>Kingdom Benefits</h2>
+  <p class="nk-rule-text">
+    Benefits are unlocked as the kingdom levels up. Current kingdom level: <strong>{{kingdom.level}}</strong>.
+  </p>
+
+  <table class="nk-benefits-table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Benefit</th>
+        <th>Description</th>
+        <th>Unlocked</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each benefits}}
+      <tr class="nk-benefit-row {{#if this.unlocked}}unlocked{{/if}}">
+        <td class="nk-benefit-level">{{this.level}}</td>
+        <td class="nk-benefit-name">{{this.name}}</td>
+        <td class="nk-benefit-desc">{{this.description}}</td>
+        <td class="nk-benefit-status">{{#if this.unlocked}}✔{{else}}—{{/if}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>

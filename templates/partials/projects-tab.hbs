@@ -1,0 +1,68 @@
+<div class="nk-projects-tab">
+  <h2>Kingdom Projects</h2>
+
+  {{#each kingdom.leaders}}
+  <div class="nk-leader-projects" data-leader-index="{{@index}}">
+    <h3>{{this.name}}'s Projects</h3>
+    <div class="nk-project-list">
+      {{#each this.projects}}
+      <div class="nk-project-card {{#if this.complete}}complete{{/if}}" data-project-id="{{this.id}}">
+        <div class="nk-project-header">
+          <input type="text" name="project-name-{{this.id}}" value="{{this.name}}" placeholder="Project Name" class="nk-project-name" />
+          <span class="nk-complexity-badge c{{this.complexity}}">{{this.complexity}}-seg</span>
+          {{#unless this.complete}}
+          <button type="button" class="nk-btn danger small" data-action="remove-project" data-project-id="{{this.id}}">✕</button>
+          {{/unless}}
+        </div>
+        <div class="nk-clock-row">
+          <div class="nk-clock" data-segments="{{this.complexity}}" data-filled="{{this.filled}}">
+            {{> "nk-clock" segments=this.complexity filled=this.filled projectId=this.id}}
+          </div>
+          {{#unless this.complete}}
+          <div class="nk-project-difficulty">
+            <label class="nk-project-dc-label">Difficulty:
+              <select name="project-dc-{{this.id}}" class="nk-project-dc-select">
+                {{#each this.dcOptions}}
+                <option value="{{this.mod}}" {{#if this.selected}}selected{{/if}}>{{this.label}} (DC {{this.dc}})</option>
+                {{/each}}
+              </select>
+            </label>
+          </div>
+          {{/unless}}
+        </div>
+        <div class="nk-project-actions">
+          {{#unless this.complete}}
+          <label class="nk-project-skill-label">Skill Used:
+            <input type="text" name="project-skill-{{this.id}}" value="{{this.skill}}" placeholder="e.g. Crafting" class="nk-project-skill-input" />
+          </label>
+          <div class="nk-roll-buttons">
+            <button type="button" class="nk-btn crit-success" data-action="roll-result" data-project-id="{{this.id}}" data-result="crit-success">Crit (+2)</button>
+            <button type="button" class="nk-btn success" data-action="roll-result" data-project-id="{{this.id}}" data-result="success">Success (+1)</button>
+            <button type="button" class="nk-btn failure" data-action="roll-result" data-project-id="{{this.id}}" data-result="failure">Failure (0)</button>
+            <button type="button" class="nk-btn crit-failure" data-action="roll-result" data-project-id="{{this.id}}" data-result="crit-failure">Crit Fail (−1)</button>
+            <button type="button" class="nk-btn aid" data-action="aid-project" data-project-id="{{this.id}}" title="Another leader Aids this project">Aid</button>
+          </div>
+          {{else}}
+          <span class="nk-complete-badge">✔ Complete - {{this.xpReward}} XP awarded</span>
+          {{/unless}}
+        </div>
+        <div class="nk-project-notes nk-notes-field">
+          <div class="nk-notes-display {{#unless this.notes}}empty{{/unless}}" title="Click to edit">{{{this.notesEnriched}}}</div>
+          <textarea name="project-notes-{{this.id}}" class="nk-notes-textarea hidden" placeholder="Effects / Notes…">{{this.notes}}</textarea>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    {{#if this.canAddProject}}
+    <div class="nk-add-project">
+      <select class="nk-complexity-select" data-leader-index="{{@index}}">
+        {{#unless this.hasComplexity4}}<option value="4">4-segment (1 XP)</option>{{/unless}}
+        {{#unless this.hasComplexity6}}<option value="6">6-segment (2 XP)</option>{{/unless}}
+        {{#unless this.hasComplexity10}}<option value="10">10-segment (3 XP)</option>{{/unless}}
+      </select>
+      <button type="button" class="nk-btn" data-action="add-project" data-leader-index="{{@index}}">+ Add Project</button>
+    </div>
+    {{/if}}
+  </div>
+  {{/each}}
+</div>

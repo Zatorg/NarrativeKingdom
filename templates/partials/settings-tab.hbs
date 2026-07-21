@@ -1,0 +1,149 @@
+<div class="nk-settings-tab">
+  <h2>GM Settings</h2>
+  <p class="nk-rule-text">These settings are GM-only.</p>
+
+  <div class="nk-settings-group">
+    <h3>Kingdom Status</h3>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="set-kingdomLevel">Kingdom level</label>
+        <p class="nk-setting-desc">Current level (capped by claimed hexes unless the cap is disabled below).</p>
+      </div>
+      <input type="number" id="set-kingdomLevel" name="kingdomLevel" value="{{kingdom.level}}" min="1" max="20" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="set-kingdomXp">Kingdom XP</label>
+        <p class="nk-setting-desc">Current XP toward the next level ({{kingdom.xpNeeded}} needed).</p>
+      </div>
+      <input type="number" id="set-kingdomXp" name="kingdomXp" value="{{kingdom.xp}}" min="0" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="set-partyLevel">Party level</label>
+        <p class="nk-setting-desc">The party's character level is used for some benefit and difficulty thresholds.</p>
+      </div>
+      <input type="number" id="set-partyLevel" name="partyLevel" value="{{kingdom.partyLevel}}" min="1" max="20" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label>Hexes claimed</label>
+        <p class="nk-setting-desc">Sets the max kingdom level (→ max L{{kingdom.hexLevelCap}}{{#if kingdom.hexesNeededMore}}, +{{kingdom.hexesNeededMore}} for L{{kingdom.nextLevel}}{{/if}}).{{#if kingdom.hexesAvailableLive}} Live from the pf2e-kingmaker map, or override manually.{{/if}}</p>
+      </div>
+      <div class="nk-setting-hexes">
+        {{#if kingdom.hexesAvailableLive}}
+          {{#if kingdom.hexesManualOverride}}
+          <input type="number" name="hexesClaimed" value="{{kingdom.hexesClaimed}}" min="0" class="nk-short-input" />
+          <button type="button" class="nk-btn small secondary" data-action="toggle-hexes-override" title="Switch back to live map count">⟳ live</button>
+          {{else}}
+          <span class="nk-hexes-live" title="Live from pf2e-kingmaker map">{{kingdom.hexesClaimed}} <span class="nk-linked-badge">⟳ live</span></span>
+          <button type="button" class="nk-btn small secondary" data-action="toggle-hexes-override" title="Enter hexes manually">✎</button>
+          {{/if}}
+        {{else}}
+          <input type="number" name="hexesClaimed" value="{{kingdom.hexesClaimed}}" min="0" class="nk-short-input" />
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+  <div class="nk-settings-group">
+    <h3>XP & Levelling</h3>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-xpPerLeader">XP per leader (multiplier)</label>
+        <p class="nk-setting-desc">XP required to level up = this value × peak leader count. Default: 5.</p>
+      </div>
+      <input type="number" id="settings-xpPerLeader" name="settings-xpPerLeader"
+             value="{{kingdom.settings.xpPerLeader}}" min="1" max="99" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-ignoreHexCap">Ignore hex count level cap</label>
+        <p class="nk-setting-desc">Normally the kingdom cannot exceed the level supported by claimed hexes. Enable to remove that restriction.</p>
+      </div>
+      <label class="nk-toggle">
+        <input type="checkbox" id="settings-ignoreHexCap" name="settings-ignoreHexCap"
+               {{#if kingdom.settings.ignoreHexCap}}checked{{/if}} />
+        <span class="nk-toggle-track"><span class="nk-toggle-thumb"></span></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="nk-settings-group">
+    <h3>Armies</h3>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-armyTierFactor">Army allowance factor</label>
+        <p class="nk-setting-desc">Free armies = round(Σ settlement tiers × this). Tiers: Village 1 / Town 2 / City 3 / Metropolis 4. Default: 0.4.</p>
+      </div>
+      <input type="number" id="settings-armyTierFactor" name="settings-armyTierFactor"
+             value="{{kingdom.settings.armyTierFactor}}" min="0.05" max="3" step="0.05" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-recruitDcStep">Recruit DC step</label>
+        <p class="nk-setting-desc">Recruit DC rises this much for each army beyond the allowance. Default: 2. Set 0 to disable the ramp.</p>
+      </div>
+      <input type="number" id="settings-recruitDcStep" name="settings-recruitDcStep"
+             value="{{kingdom.settings.recruitDcStep}}" min="0" max="20" step="1" class="nk-short-input" />
+    </div>
+  </div>
+
+  <div class="nk-settings-group">
+    <h3>Events</h3>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-eventThreshold">Event decisive threshold</label>
+        <p class="nk-setting-desc">Green pips for a Success (or red for a Failure) on a 10-segment event; a close split fills to Neutral. Default: 7.</p>
+      </div>
+      <input type="number" id="settings-eventThreshold" name="settings-eventThreshold"
+             value="{{kingdom.settings.eventThreshold}}" min="2" max="10" step="1" class="nk-short-input" />
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label for="settings-eventDecayPerTurn">Event decay per turn</label>
+        <p class="nk-setting-desc">Red pips added to each unresolved event at the start of a new turn. Default: 1. Set 0 to disable.</p>
+      </div>
+      <input type="number" id="settings-eventDecayPerTurn" name="settings-eventDecayPerTurn"
+             value="{{kingdom.settings.eventDecayPerTurn}}" min="0" max="10" step="1" class="nk-short-input" />
+    </div>
+  </div>
+
+  <div class="nk-settings-group">
+    <h3>Data</h3>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label>Export</label>
+        <p class="nk-setting-desc">Download all kingdom data as a JSON file for backup or transfer.</p>
+      </div>
+      <button type="button" class="nk-btn" data-action="export-data">Export JSON</button>
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label>Import</label>
+        <p class="nk-setting-desc">Load kingdom data from a previously exported JSON file. This will overwrite all current data.</p>
+      </div>
+      <button type="button" class="nk-btn danger" data-action="import-data">Import JSON</button>
+    </div>
+
+    <div class="nk-setting-row">
+      <div class="nk-setting-label">
+        <label>Reset</label>
+        <p class="nk-setting-desc">Permanently erase all kingdom data and start fresh. Cannot be undone.</p>
+      </div>
+      <button type="button" class="nk-btn danger" data-action="reset-kingdom">⚠ Reset All Data</button>
+    </div>
+  </div>
+</div>

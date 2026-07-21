@@ -1,0 +1,183 @@
+<div class="nk-turn-tab">
+  <h2>Kingdom Turn</h2>
+
+  <div class="nk-turn-tracker">
+    <div class="nk-turn-header">
+      <label>Month / Turn</label>
+      <span class="nk-turn-number">Turn {{kingdom.turnNumber}}{{#unless kingdom.turn.active}} — no turn in progress{{/unless}}</span>
+      {{#if isGM}}
+      <button type="button" class="nk-btn secondary small" data-action="start-new-turn" {{#if kingdom.turn.active}}disabled{{/if}} title="Available only when no turn is in progress">Start New Turn</button>
+      <button type="button" class="nk-btn small" data-action="end-turn" {{#unless kingdom.turn.active}}disabled{{/unless}} title="Ends the current turn — any unresolved events worsen">End Turn</button>
+      {{/if}}
+    </div>
+
+    {{#if kingdom.turn.active}}
+    <!-- ── Phase 1: Event ─────────────────────────────────────────────── -->
+    <div class="nk-phase-block {{#if (eq kingdom.turn.phase 'event')}}active{{/if}} {{#unless (eq kingdom.turn.phase 'event')}}done{{/unless}}">
+      <div class="nk-phase-header">
+        <span class="nk-phase-num">1</span>
+        <h3>Kingdom Event</h3>
+        {{#unless (eq kingdom.turn.phase 'event')}}
+        <span class="nk-phase-done-badge">✔ {{#if kingdom.turn.eventName}}{{kingdom.turn.eventName}}{{else}}Event set{{/if}}</span>
+        {{/unless}}
+      </div>
+      {{#if (eq kingdom.turn.phase 'event')}}
+      <p class="nk-phase-desc">Select the Kingdom Event for this turn before leaders begin their projects.</p>
+      {{#if isGM}}
+      <div class="nk-phase-actions">
+        <button type="button" class="nk-btn" data-action="trigger-event">Roll Random Event</button>
+        <button type="button" class="nk-btn secondary" data-action="skip-event">No Event This Turn</button>
+      </div>
+      {{/if}}
+      {{/if}}
+    </div>
+
+    <!-- ── Phase 2: Projects Setup ────────────────────────────────────── -->
+    <div class="nk-phase-block {{#if (eq kingdom.turn.phase 'projects')}}active{{/if}} {{#if (eq kingdom.turn.phase 'week')}}done{{/if}} {{#if (eq kingdom.turn.phase 'complete')}}done{{/if}} {{#if (eq kingdom.turn.phase 'event')}}locked{{/if}}">
+      <div class="nk-phase-header">
+        <span class="nk-phase-num">2</span>
+        <h3>Leader Projects</h3>
+        {{#if kingdom.turn.projectPhaseComplete}}
+        <span class="nk-phase-done-badge">✔ {{kingdom.turn.absentCount}} absent</span>
+        {{/if}}
+      </div>
+      {{#if (eq kingdom.turn.phase 'projects')}}
+      <p class="nk-phase-desc">Mark which leaders are present, then begin the week. Absent leaders cost 1 XP each.</p>
+      <ul class="nk-leader-attendance">
+        {{#each kingdom.leaders}}
+        <li>
+          <label>
+            <input type="checkbox" name="leader-attended-{{@index}}" {{#if this.attendedTurn}}checked{{/if}} />
+            {{this.name}}
+            <span class="nk-attendance-projects">{{this.projectCount}} project{{#if (lt this.projectCount 2)}}{{else}}s{{/if}}</span>
+          </label>
+        </li>
+        {{/each}}
+      </ul>
+      {{#if isGM}}
+      <div class="nk-phase-actions">
+        <button type="button" class="nk-btn" data-action="begin-week">Begin the Week →</button>
+      </div>
+      {{/if}}
+      {{/if}}
+    </div>
+
+    <!-- ── Phase 3: The Week (7 Days) ─────────────────────────────────── -->
+    <div class="nk-phase-block {{#if (eq kingdom.turn.phase 'week')}}active{{/if}} {{#if (eq kingdom.turn.phase 'complete')}}done{{/if}} {{#unless (eq kingdom.turn.phase 'week')}}{{#unless (eq kingdom.turn.phase 'complete')}}locked{{/unless}}{{/unless}}">
+      <div class="nk-phase-header">
+        <span class="nk-phase-num">3</span>
+        <h3>The Week</h3>
+        {{#if (eq kingdom.turn.phase 'complete')}}
+        <span class="nk-phase-done-badge">✔ Week complete</span>
+        {{else if (eq kingdom.turn.phase 'week')}}
+        <span class="nk-day-counter">Day {{kingdom.turn.currentDay}} / 7</span>
+        {{/if}}
+      </div>
+      {{#if (eq kingdom.turn.phase 'week')}}
+      <p class="nk-phase-desc">Each leader rolls for their project(s) today, or aids another leader's project instead. Advance when all rolls are made.</p>
+      <div class="nk-day-progress">
+        {{#each kingdom.turn.dayPips}}
+        <div class="nk-day-pip {{#if this.filled}}filled{{/if}} {{#if this.current}}current{{/if}}" title="Day {{this.day}}"></div>
+        {{/each}}
+      </div>
+      <div class="nk-day-leaders">
+        {{#each kingdom.leaders}}
+        {{#if this.attendedTurn}}
+        <div class="nk-day-leader {{#if this.actedToday}}acted{{/if}}">
+          <div class="nk-day-leader-head">
+            <h4>{{this.name}}</h4>
+            {{#if this.actedToday}}
+            <span class="nk-day-acted-badge">✔ Acted today</span>
+            {{else}}
+            <button type="button" class="nk-btn secondary small" data-action="turn-aid" data-leader-index="{{@index}}">🤝 Aid/Event</button>
+            {{/if}}
+          </div>
+          {{#if this.projects.length}}
+          <div class="nk-day-projects">
+            {{#each this.projects}}
+            {{#unless this.complete}}
+            <div class="nk-day-project">
+              <div class="nk-day-project-info">
+                <span class="nk-day-project-name">{{this.name}}</span>
+                <span class="nk-day-project-dc" title="{{this.dcLabel}}">DC {{this.effectiveDC}}</span>
+                {{#if this.skill}}<span class="nk-day-project-skill" title="Skill used: {{this.skill}}">{{this.skill}}</span>{{/if}}
+              </div>
+              <span class="nk-mini-pips" title="{{this.filled}} / {{this.complexity}}">
+                {{#each this.pips}}<span class="nk-mini-pip {{#if this.filled}}filled{{/if}}"></span>{{/each}}
+              </span>
+              <div class="nk-roll-buttons">
+                <button type="button" class="nk-btn crit-success small" data-action="roll-result" data-project-id="{{this.id}}" data-acting-leader-index="{{@../index}}" data-result="crit-success" {{#if ../actedToday}}disabled{{/if}}>Crit ✦</button>
+                <button type="button" class="nk-btn success small" data-action="roll-result" data-project-id="{{this.id}}" data-acting-leader-index="{{@../index}}" data-result="success" {{#if ../actedToday}}disabled{{/if}}>Success</button>
+                <button type="button" class="nk-btn failure small" data-action="roll-result" data-project-id="{{this.id}}" data-acting-leader-index="{{@../index}}" data-result="failure" {{#if ../actedToday}}disabled{{/if}}>Failure</button>
+                <button type="button" class="nk-btn crit-failure small" data-action="roll-result" data-project-id="{{this.id}}" data-acting-leader-index="{{@../index}}" data-result="crit-failure" {{#if ../actedToday}}disabled{{/if}}>Crit Fail</button>
+              </div>
+            </div>
+            {{/unless}}
+            {{/each}}
+          </div>
+          {{else}}
+          <p class="nk-empty">No active projects.</p>
+          {{/if}}
+        </div>
+        {{/if}}
+        {{/each}}
+      </div>
+      {{#if kingdom.activeEvents.length}}
+      <div class="nk-turn-events">
+        <h4 class="nk-turn-events-title">Kingdom Events in Progress</h4>
+        {{#each kingdom.activeEvents}}
+        {{#unless this.resolved}}
+        <div class="nk-turn-event" data-event-id="{{this.id}}">
+          <div class="nk-turn-event-head">
+            <span class="nk-turn-event-name">{{this.name}}</span>
+            {{#if this.eventDC}}<span class="nk-event-dc" title="Event level {{this.eventLevel}}">DC {{this.eventDC}}</span>{{/if}}
+            <span class="nk-turn-event-progress" title="green successes vs red failures">🟢 {{this.greenFilled}} · 🔴 {{this.redFilled}} / {{this.clockSize}}</span>
+          </div>
+          <div class="nk-clock" data-segments="{{this.clockSize}}" data-green-filled="{{this.greenFilled}}" data-red-filled="{{this.redFilled}}">
+            {{> "nk-clock" segments=this.clockSize greenFilled=this.greenFilled redFilled=this.redFilled projectId=this.id eventMode=true}}
+          </div>
+          {{#if this.description}}<p class="nk-turn-event-desc">{{this.description}}</p>{{/if}}
+          {{#if this.checks}}
+          <ul class="nk-turn-event-checks">
+            {{#each this.checks}}<li><strong>{{this.name}}</strong>{{#if this.description}} — {{this.description}}{{/if}}</li>{{/each}}
+          </ul>
+          {{/if}}
+          <div class="nk-roll-buttons">
+            <button type="button" class="nk-btn crit-success small" data-action="event-roll" data-event-id="{{this.id}}" data-result="crit-success">Crit (+2 🟢)</button>
+            <button type="button" class="nk-btn success small" data-action="event-roll" data-event-id="{{this.id}}" data-result="success">Success (+1 🟢)</button>
+            <button type="button" class="nk-btn failure small" data-action="event-roll" data-event-id="{{this.id}}" data-result="failure">Failure (+1 🔴)</button>
+            <button type="button" class="nk-btn crit-failure small" data-action="event-roll" data-event-id="{{this.id}}" data-result="crit-failure">Crit Fail (+2 🔴)</button>
+          </div>
+        </div>
+        {{/unless}}
+        {{/each}}
+      </div>
+      {{/if}}
+      {{#if isGM}}
+      <div class="nk-phase-actions">
+        {{#if (eq kingdom.turn.currentDay 7)}}
+        <button type="button" class="nk-btn" data-action="advance-day">Complete the Week ✔</button>
+        {{else}}
+        <button type="button" class="nk-btn secondary" data-action="advance-day">End Day {{kingdom.turn.currentDay}} → Day {{inc kingdom.turn.currentDay}}</button>
+        {{/if}}
+      </div>
+      {{/if}}
+      {{/if}}
+      {{#if (eq kingdom.turn.phase 'complete')}}
+      <p class="nk-phase-desc">All 7 days complete.{{#if isGM}} Click <strong>End Turn</strong> above when ready — unresolved events will worsen.{{/if}}</p>
+      {{/if}}
+    </div>
+    {{else}}
+    <div class="nk-phase-block active">
+      <p class="nk-phase-desc">No kingdom turn is in progress.{{#if isGM}} Click <strong>Start New Turn</strong> to begin turn {{inc kingdom.turnNumber}}.{{else}} Waiting for the GM to start the next turn.{{/if}}</p>
+    </div>
+    {{/if}}
+
+    <!-- Absence penalty summary -->
+    {{#if kingdom.turn.absentCount}}
+    <div class="nk-turn-xp-summary">
+      <p>Leaders absent this turn: <strong>{{kingdom.turn.absentCount}}</strong> — XP Penalty: <strong>−{{kingdom.turn.absentCount}} XP</strong></p>
+    </div>
+    {{/if}}
+  </div>
+</div>

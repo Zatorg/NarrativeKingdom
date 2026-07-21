@@ -1,0 +1,122 @@
+<div class="nk-settlements-tab">
+  <h2>Settlements</h2>
+
+  {{#unless kingdom.hasCapital}}
+  <div class="nk-settlements-warning">
+    ⚠ Your kingdom has no capital!
+  </div>
+  {{/unless}}
+
+  <div class="nk-settlements-grid">
+    {{#each kingdom.settlements}}
+    {{#if this.expanded}}
+    <div class="nk-settlement-card expanded {{#if this.isCapital}}is-capital{{/if}}" data-settlement-index="{{@index}}">
+      <div class="nk-settlement-header">
+        <button type="button" class="nk-settlement-toggle nk-settlement-collapse" data-settlement-index="{{@index}}" title="Collapse">▾</button>
+        <span class="nk-capital-crown {{#unless this.isCapital}}hidden{{/unless}}" title="Capital">♛</span>
+        <input type="text" name="settlement-name-{{@index}}" value="{{this.name}}" placeholder="Settlement Name" class="nk-settlement-name" />
+        <select name="settlement-stage-{{@index}}" class="nk-settlement-stage">
+          <option value="village"    {{#if (eq this.stage "village")}}selected{{/if}}>Village</option>
+          <option value="town"       {{#if (eq this.stage "town")}}selected{{/if}}>Town</option>
+          <option value="city"       {{#if (eq this.stage "city")}}selected{{/if}}>City</option>
+          <option value="metropolis" {{#if (eq this.stage "metropolis")}}selected{{/if}}>Metropolis</option>
+        </select>
+        <label class="nk-capital-label" title="Set as capital">
+          <input type="radio" name="settlement-capital" value="{{@index}}" {{#if this.isCapital}}checked{{/if}} />
+          Capital
+        </label>
+      </div>
+      <div class="nk-settlement-details">
+        <div class="nk-settlement-field">
+          <label>Location</label>
+          <input type="text" name="settlement-location-{{@index}}" value="{{this.location}}" placeholder="e.g. Hex C4, riverbank" />
+        </div>
+        <div class="nk-settlement-field nk-settlement-field--pop">
+          <label>Population</label>
+          <input type="number" name="settlement-population-{{@index}}" value="{{this.population}}" min="0" class="nk-settlement-pop" />
+        </div>
+      </div>
+      <div class="nk-settlement-progress">
+        {{#if this.threshold}}
+        <div class="nk-progress-header">
+          <label>Development</label>
+          <span class="nk-progress-label">{{this.completedSegments}} / {{this.threshold}} segments → {{this.nextStageLabel}}</span>
+          <input type="number" name="settlement-segments-{{@index}}" value="{{this.completedSegments}}" min="0" class="nk-segments-input" />
+        </div>
+        <div class="nk-progress-bar-track">
+          <div class="nk-progress-bar-fill {{#if this.canAdvance}}ready{{/if}}" style="width: {{this.progressPct}}%"></div>
+        </div>
+        <div class="nk-progress-actions">
+          <button type="button" class="nk-btn secondary small" data-action="settlement-add-segments" data-settlement-index="{{@index}}" data-amount="4">+4</button>
+          <button type="button" class="nk-btn secondary small" data-action="settlement-add-segments" data-settlement-index="{{@index}}" data-amount="6">+6</button>
+          <button type="button" class="nk-btn secondary small" data-action="settlement-add-segments" data-settlement-index="{{@index}}" data-amount="10">+10</button>
+          <button type="button" class="nk-btn secondary small" data-action="settlement-add-segments" data-settlement-index="{{@index}}" data-amount="-1">−1</button>
+          {{#if this.canAdvance}}
+          <button type="button" class="nk-btn small" data-action="settlement-advance-stage" data-settlement-index="{{@index}}">
+            ↑ Advance to {{this.nextStageLabel}}
+          </button>
+          {{/if}}
+        </div>
+        {{else}}
+        <p class="nk-settlement-max">⚜ Metropolis ⚜</p>
+        {{/if}}
+      </div>
+      <div class="nk-settlement-people nk-notes-field">
+        <label>Important People</label>
+        <div class="nk-notes-display {{#unless this.importantPeople}}empty{{/unless}}" title="Click to edit">{{{this.importantPeopleEnriched}}}</div>
+        <textarea name="settlement-people-{{@index}}" class="nk-notes-textarea hidden" placeholder="Notable NPCs, leaders, merchants…">{{this.importantPeople}}</textarea>
+      </div>
+      <div class="nk-settlement-structures">
+        <div class="nk-section-header nk-structures-header">
+          <label>Structures &amp; Landmarks</label>
+          <button type="button" class="nk-btn small" data-action="add-structure" data-settlement-index="{{@index}}">+ Add</button>
+        </div>
+        {{#if this.structures.length}}
+        <ul class="nk-structure-list">
+          {{#each this.structures}}
+          <li class="nk-structure-entry">
+            <input type="text" name="structure-name-{{this.id}}" value="{{this.name}}" placeholder="Structure / landmark" class="nk-structure-name" />
+            <input type="text" name="structure-notes-{{this.id}}" value="{{this.notes}}" placeholder="Note…" class="nk-structure-note" />
+            <button type="button" class="nk-btn danger small" data-action="remove-structure" data-structure-id="{{this.id}}" title="Remove">✕</button>
+          </li>
+          {{/each}}
+        </ul>
+        {{else}}
+        <p class="nk-empty">No structures noted.</p>
+        {{/if}}
+      </div>
+      <div class="nk-settlement-notes nk-notes-field">
+        <label>Notes</label>
+        <div class="nk-notes-display {{#unless this.notes}}empty{{/unless}}" title="Click to edit">{{{this.notesEnriched}}}</div>
+        <textarea name="settlement-notes-{{@index}}" class="nk-notes-textarea hidden" placeholder="History, quirks, ongoing situations…">{{this.notes}}</textarea>
+      </div>
+      <div class="nk-settlement-footer">
+        <button type="button" class="nk-btn danger small" data-action="remove-settlement" data-settlement-index="{{@index}}">✕ Remove</button>
+      </div>
+    </div>
+    {{else}}
+    <div class="nk-settlement-compact nk-settlement-toggle {{#if this.isCapital}}is-capital{{/if}}" data-settlement-index="{{@index}}" title="Click to expand">
+      <div class="nk-compact-head">
+        {{#if this.isCapital}}<span class="nk-capital-crown" title="Capital">♛</span>{{/if}}
+        <span class="nk-compact-name">{{this.name}}</span>
+        <span class="nk-compact-stage stage-{{this.stage}}">{{this.stage}}</span>
+      </div>
+      <div class="nk-compact-meta">
+        <span title="Population">👥 {{this.population}}</span>
+        {{#if this.threshold}}<span title="Development">⚒ {{this.completedSegments}}/{{this.threshold}}</span>{{else}}<span title="Fully developed">⚜ Max</span>{{/if}}
+        {{#if this.structures.length}}<span title="Structures &amp; landmarks">🏛 {{this.structures.length}}</span>{{/if}}
+      </div>
+      {{#if this.threshold}}
+      <div class="nk-compact-progress"><div class="nk-compact-progress-fill {{#if this.canAdvance}}ready{{/if}}" style="width: {{this.progressPct}}%"></div></div>
+      {{/if}}
+    </div>
+    {{/if}}
+    {{else}}
+    <p class="nk-empty">No settlements yet. Add one below.</p>
+    {{/each}}
+  </div>
+
+  <div class="nk-settlement-add">
+    <button type="button" class="nk-btn secondary" data-action="add-settlement">+ Add Settlement</button>
+  </div>
+</div>

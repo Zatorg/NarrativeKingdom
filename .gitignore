@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+*.egg-info/
+*.dist-info/
+__pycache__/
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+*.pem
+supplements/
+
+# Build & Dist
+dist/
+build/
+*.log
+
+# Built Foundry compendium packs (LevelDB). Source of truth lives in packs-source/;
+# rebuild the loadable packs with `npm run pack`. Kept out of git to avoid the
+# binary churn LevelDB produces every time a world is opened.
+packs/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Personal, non-distributed content (event packs, etc.)
+private/

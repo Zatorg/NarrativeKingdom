@@ -1,0 +1,52 @@
+<div class="nk-notes-tab">
+
+  <!-- ── General Kingdom Notes ───────────────────────────────────────────── -->
+  <h2>Kingdom Notes</h2>
+  <div class="nk-notes-field nk-kingdom-notes-field">
+    <div class="nk-notes-display {{#unless kingdom.notes}}empty{{/unless}}" title="Click to edit">{{{kingdom.notesEnriched}}}</div>
+    <textarea name="kingdomNotes" class="nk-notes-textarea hidden" placeholder="General notes, kingdom lore, important decisions…">{{kingdom.notes}}</textarea>
+  </div>
+
+  <!-- ── Ongoing Effects & Bonuses ───────────────────────────────────────── -->
+  <div class="nk-section-header">
+    <h2>Ongoing Effects &amp; Bonuses</h2>
+    <button type="button" class="nk-btn small" data-action="add-effect">+ Add Effect</button>
+  </div>
+
+  {{#if kingdom.ongoingEffects.length}}
+  <div class="nk-effects-list">
+    {{#each kingdom.ongoingEffects}}
+    <div class="nk-effect-card {{#if this.expiring}}expiring{{/if}}" data-effect-id="{{this.id}}">
+      <div class="nk-effect-header">
+        <input type="text" name="effect-name-{{this.id}}" value="{{this.name}}" placeholder="Effect name" class="nk-effect-name" />
+        <div class="nk-effect-expiry">
+          <label>Turns left</label>
+          <input type="number" name="effect-expires-{{this.id}}" value="{{this.turnsRemaining}}" min="1" placeholder="—" class="nk-short-input" title="Leave blank for permanent" />
+        </div>
+        <button type="button" class="nk-btn danger small" data-action="remove-effect" data-effect-id="{{this.id}}">✕</button>
+      </div>
+      <div class="nk-notes-field">
+        <div class="nk-notes-display {{#unless this.description}}empty{{/unless}}" title="Click to edit">{{{this.descriptionEnriched}}}</div>
+        <textarea name="effect-desc-{{this.id}}" class="nk-notes-textarea hidden" placeholder="Effect description, mechanical bonus, source…">{{this.description}}</textarea>
+      </div>
+      {{#if this.turnsRemaining}}
+      <div class="nk-effect-footer">
+        {{#if this.expiring}}
+        <span class="nk-expiry-badge warning">⚠ Expires next turn (1 turn left)</span>
+        {{else}}
+        <span class="nk-expiry-badge">Expires in {{this.turnsRemaining}} turn{{#if (lt this.turnsRemaining 2)}}{{else}}s{{/if}}</span>
+        {{/if}}
+      </div>
+      {{else}}
+      <div class="nk-effect-footer">
+        <span class="nk-expiry-badge permanent">⚜ Permanent</span>
+      </div>
+      {{/if}}
+    </div>
+    {{/each}}
+  </div>
+  {{else}}
+  <p class="nk-empty-state">No ongoing effects. Use <strong>+ Add Effect</strong> to track kingdom-wide bonuses or conditions.</p>
+  {{/if}}
+
+</div>

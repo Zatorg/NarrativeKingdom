@@ -1,0 +1,104 @@
+<div class="nk-rules-tab">
+  <h2>Rules &amp; Reference</h2>
+  <p class="nk-rule-text">These are only a suggestion and the system should be flexible enough to allow for variations.</p>
+
+  <div class="nk-rules-grid">
+
+    <section class="nk-rule-section nk-rule-section-wide">
+      <h3>What this is</h3>
+      <p>A lighter, narrative layer for running a Pathfinder kingdom. Set your kingdom's leaders and once a month they spend a week governing, a <strong>Kingdom Turn</strong>. Each leader may define their own projects in cooperation with the GM and these are tracked by a progress bar depending on their length and filled by rolling against a single <strong>kingdom-level DC</strong>. Finishing things earns <strong>XP</strong>, which levels the kingdom up and unlocks <strong>Benefits</strong>.</p>
+      <p>This uses a variation on the official victory points system, accumulating points based on check outcomes.</p>
+    </section>
+
+    <section class="nk-rule-section nk-rule-section-wide">
+      <h3>A Kingdom Turn, step by step</h3>
+      <ol class="nk-rule-steps">
+        <li><strong>Start the turn</strong> (GM) - begin a new month on the <em>Kingdom Turn</em> tab.</li>
+        <li><strong>Kingdom Event</strong> - roll or pick the turn's event (a threat or opportunity as a 10-segment clock), or skip it.</li>
+        <li><strong>Projects &amp; attendance</strong> - each present leader takes on up to three projects (build a settlement, raise or run armies, any endeavour). Absent leaders cost the kingdom 1 XP each.</li>
+        <li><strong>Run the week (7 days)</strong> - each day, every leader rolls one of their projects <em>or</em> aids another's, applying the result to that progress bar or the event progress bar.</li>
+        <li><strong>End the turn</strong> (GM) - completed projects pay out XP; events left unresolved worsen (gain 🔴) and may auto-resolve; the turn is logged to <em>History</em>.</li>
+        <li><strong>Carry over</strong> - unfinished projects and events persist into next month; banked XP may trigger a level-up.</li>
+      </ol>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Leaders</h3>
+      <p>Any NPC and PC can be a leader. They run projects, face events, and gain Kingdom Benefits. Drop an actor onto the <em>Leaders</em> tab to link it.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Projects</h3>
+      <p>A leader may have up to <strong>3 ongoing projects</strong>, one of each size (4, 6, or 10 segments; bigger bars give more XP). Roll vs. the kingdom DC (± difficulty): Crit +2, Success +1, Failure 0, Crit Fail −1. Instead of rolling their own, a leader may spend the day to <strong>Aid</strong> another's project. Completing a project awards its XP when the turn ends.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Kingdom Events</h3>
+      <p>10-segment progress bar, with its own <strong>DC</strong> (the kingdom DC shifted by the event's <em>Event +N</em> difficulty). Reach <strong>{{kingdom.settings.eventThreshold}} 🟢</strong> for a <strong>Success</strong> or <strong>{{kingdom.settings.eventThreshold}} 🔴</strong> for a <strong>Failure</strong>; fill it with neither side decisive and it's a <strong>Neutral</strong> outcome. Success/Failure award 3 XP, Neutral 1. An event left unresolved gains <strong>{{kingdom.settings.eventDecayPerTurn}} 🔴</strong> when the turn ends.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>XP &amp; Levelling</h3>
+      <p>XP comes from finished projects and resolved events. The kingdom levels up at <strong>5 × peak leader count</strong> (the most simultaneous leaders since the last level-up, so padding the roster can't cheapen a level). Kingdom level is capped by your <strong>claimed hexes</strong> (in GM Settings) unless that cap is disabled. Each level unlocks a <strong>Benefit</strong> (see the <em>Benefits</em> tab).</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Settlements</h3>
+      <p>Fill a settlement's growth clock to advance its stage: <strong>Village → Town → City → Metropolis</strong>. Keep exactly one <strong>capital</strong>. Settlement tiers set your free army allowance, and each settlement holds a freeform list of <strong>structures &amp; landmarks</strong>.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Armies</h3>
+      <p>Armies are PF2e army actors, raised and run through leader projects (apply the result on the actor's own sheet):</p>
+      <ul>
+        <li><strong>Recruit</strong> (10-seg) finish it to earn a recruit, then drop the army actor onto the Armies tab.</li>
+        <li><strong>Move</strong> (4-seg) reposition up to 3 hexes, <strong>Train</strong> (6-seg) add/change a feat, <strong>Outfit</strong> (6-seg) add/upgrade gear.</li>
+      </ul>
+      <p>Free allowance = settlement tiers (Village 1 / Town 2 / City 3 / Metropolis 4). Recruiting beyond it raises the Recruit DC (+2 each, no hard cap). Armies are leveled to your <strong>kingdom's level</strong>.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Relations</h3>
+      <p>On the <strong>Relations</strong> tab, track factions with a relation <strong>type</strong>, a <strong>Reputation</strong> score (−50…50) mapped to the PF2e standings (Revered → Hunted), notes, and a dated history log.</p>
+    </section>
+
+    <section class="nk-rule-section">
+      <h3>Ongoing Effects</h3>
+      <p>On the <strong>Notes</strong> tab, log temporary or permanent bonuses, penalties, and situations. Give an effect a turn expiry to auto-remove it when that kingdom turn begins; leave it blank for a permanent effect.</p>
+    </section>
+
+    <div class="nk-xp-formula nk-rule-section-wide">
+      <p>XP needed to level up: <strong>5 × {{kingdom.leaders.length}} leaders = {{kingdom.xpNeeded}} XP</strong></p>
+      <p>Max kingdom level: <strong>{{kingdom.maxLevel}}</strong>
+        (lower of party level <strong>{{kingdom.partyLevel}}</strong>
+        or hex cap <strong>L{{kingdom.hexLevelCap}}</strong>)
+      </p>
+      <p>Hexes claimed: <strong>{{kingdom.hexesClaimed}}</strong>.
+        {{#if kingdom.settings.ignoreHexCap}}
+          Hex cap disabled, so only party level limits advancement.
+        {{else if kingdom.hexesNeededMore}}
+          Need <strong>{{kingdom.hexesNeededMore}}</strong> more hex{{#if (lt 1 kingdom.hexesNeededMore)}}es{{/if}} to unlock Level {{kingdom.nextLevel}}.
+        {{else}}
+          Hex count limits max kingdom level to <strong>L{{kingdom.hexLevelCap}}</strong>.
+        {{/if}}
+      </p>
+      <details class="nk-hex-formula-details">
+        <summary>Hex requirements by level</summary>
+        <p class="nk-rule-text">Formula: <code>round(0.4 × L² − 0.5 × L + 1)</code></p>
+        <table class="nk-benefits-table">
+          <thead><tr><th>Level</th><th>Hexes needed</th><th></th></tr></thead>
+          <tbody>
+            {{#each hexProgression}}
+            <tr class="nk-benefit-row {{#if this.current}}unlocked{{/if}}">
+              <td class="nk-benefit-level">{{this.level}}</td>
+              <td>{{this.hexesNeeded}}</td>
+              <td>{{#if this.current}}◄ current{{/if}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </details>
+    </div>
+
+  </div>
+</div>

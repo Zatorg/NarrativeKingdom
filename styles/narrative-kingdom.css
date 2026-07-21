@@ -1,0 +1,3217 @@
+﻿/* ──────────────────────────────────────────────────────────────────────────
+   Narrative Kingdom Management — Stylesheet
+   Dark-mode palette with golden + Kingmaker green highlights
+   Accents: #c9a84c (gold) · #6aa84f / #548433 (Kingmaker green) · #004416 (deep forest)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ─── Variables ─────────────────────────────────────────────────────────── */
+.narrative-kingdom {
+  --nk-bg:           #1a1a1d;   /* neutral dark base */
+  --nk-bg-card:      #232328;
+  --nk-bg-header:    #141416;
+  --nk-bg-elevated:  #2c2c32;
+  --nk-border:       #3a3a42;
+  --nk-border-light: #4c4c56;
+
+  --nk-primary:      #6aa84f;   /* Kingmaker green (brightened accent) */
+  --nk-primary-dim:  #2f4a22;
+  --nk-primary-glow: rgba(106, 168, 79, 0.35);
+  --nk-deep:         #004416;   /* Kingmaker deep forest */
+
+  --nk-gold:         #c9a84c;
+  --nk-gold-light:   #e8c97a;
+
+  --nk-text:         #e4e4e8;   /* near-white, high legibility */
+  --nk-text-muted:   #9a9aa4;
+
+  --nk-green:        #6abf6a;
+  --nk-red:          #e05252;
+  --nk-blue:         #4a9fd4;
+  --nk-orange:       #e07c20;
+
+  --nk-seg-empty:    #2a2a30;
+  --nk-seg-filled:   #6aa84f;
+
+  --nk-radius:       6px;
+  --nk-radius-lg:    10px;
+  --nk-shadow:       0 2px 8px rgba(0, 0, 0, 0.5);
+  --nk-shadow-card:  0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Sheet Wrapper ──────────────────────────────────────────────────────── */
+.narrative-kingdom .window-content {
+  padding: 0;
+  overflow: hidden;
+  background: var(--nk-bg);
+  color: var(--nk-text);
+  font-family: "Signika", "Palatino Linotype", serif;
+}
+
+.nk-kingdom-sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────────────── */
+.nk-header {
+  background: linear-gradient(180deg, #1c1c20 0%, #141416 100%);
+  border-bottom: 2px solid var(--nk-gold);
+  padding: 10px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+}
+
+/* Top-bar read-only stat strip (current level / XP / max level) */
+.nk-topbar-stats { display: flex; align-items: center; gap: 6px 22px; flex-wrap: wrap; }
+.nk-stat { display: flex; flex-direction: column; line-height: 1.05; }
+.nk-stat-label { font-size: 0.64em; text-transform: uppercase; letter-spacing: 0.07em; color: var(--nk-text-muted); font-weight: 700; }
+.nk-stat-value { font-family: "Modesto Condensed", "Signika", serif; font-size: 1.28em; font-weight: 600; color: var(--nk-gold-light); }
+.nk-stat-sub { color: var(--nk-text-muted); font-size: 0.62em; font-weight: 400; }
+.nk-topbar-levelup { align-self: center; }
+.nk-setting-hexes { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+/* ─── DC Reference Panel ─────────────────────────────────────────────────── */
+
+.nk-dc-current {
+  color: var(--nk-gold-light);
+  font-weight: 700;
+}
+
+.nk-dc-columns {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.nk-dc-table {
+  border-collapse: collapse;
+  font-size: 0.78em;
+  min-width: 120px;
+}
+
+.nk-dc-table th {
+  color: var(--nk-text-muted);
+  text-align: left;
+  padding: 2px 8px 4px;
+  border-bottom: 1px solid var(--nk-border);
+  font-weight: 600;
+  font-size: 0.85em;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nk-dc-table td {
+  padding: 1px 8px;
+  color: var(--nk-text-muted);
+}
+
+.nk-dc-current-row td {
+  color: var(--nk-gold-light);
+  font-weight: 700;
+  background: rgba(232, 201, 122, 0.08);
+}
+
+.nk-dc-standard-row td {
+  color: var(--nk-text);
+}
+
+.nk-title {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.nk-title input {
+  font-size: 1.1em;
+  font-weight: bold;
+  line-height: 1.4;
+  padding: 3px 0 5px;
+  color: var(--nk-gold-light);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  width: 100%;
+  min-width: 0;
+  height: auto;
+  overflow: visible;
+  letter-spacing: 0.02em;
+}
+
+.nk-title input:focus {
+  outline: none;
+  border-bottom-color: var(--nk-primary);
+}
+
+.nk-level-block {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.92em;
+}
+
+.nk-level-block label {
+  color: var(--nk-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.nk-short-input {
+  width: 48px !important;
+  color: var(--nk-gold-light) !important;
+  font-weight: bold;
+}
+
+.nk-xp-needed {
+  color: var(--nk-text-muted);
+  font-size: 0.9em;
+}
+
+.nk-level-block input[type=number] {
+  width: 52px;
+  background: var(--nk-bg-card);
+  color: var(--nk-text);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 3px 4px;
+  text-align: center;
+}
+
+.nk-hexes-live {
+  color: var(--nk-gold-light);
+  font-weight: bold;
+  min-width: 28px;
+  text-align: center;
+}
+
+.nk-linked-badge {
+  color: var(--nk-green);
+  font-size: 0.75em;
+  font-weight: normal;
+  margin-left: 3px;
+}
+
+.nk-hex-cap-note {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  margin-left: 2px;
+  white-space: nowrap;
+}
+
+.nk-hex-requirements {
+  margin-top: 1.5em;
+}
+
+/* ─── Tabs ───────────────────────────────────────────────────────────────── */
+.nk-tabs {
+  display: flex;
+  flex-direction: column;
+  background: var(--nk-bg-header);
+  border-bottom: 2px solid var(--nk-deep);
+  flex-shrink: 0;
+  gap: 3px;
+  padding: 6px 8px 0;
+}
+.nk-tab-row { display: flex; gap: 2px; flex-wrap: wrap; }
+/* Secondary row (records / reference / GM) reads a touch quieter and smaller. */
+.nk-tab-row-secondary .nk-tab-btn { font-size: 0.82em; padding: 5px 11px; }
+.nk-tab-row-secondary .nk-tab-btn:not(.active) { opacity: 0.82; }
+
+.nk-tab-btn {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  color: var(--nk-text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 8px 13px;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+  text-transform: uppercase;
+  position: relative;
+  bottom: -2px;
+}
+
+.nk-tab-btn:hover {
+  color: var(--nk-text);
+  background: var(--nk-bg-elevated);
+  border-color: var(--nk-border-light);
+}
+
+.nk-tab-btn.active {
+  color: var(--nk-gold-light);
+  background: var(--nk-bg);
+  border-color: var(--nk-primary);
+  border-bottom-color: var(--nk-bg);
+  font-weight: 700;
+}
+
+.nk-tab-content {
+  display: block;
+  overflow-y: auto;
+  padding: 16px 18px;
+  flex: 1;
+}
+
+.nk-tab-content.hidden { display: none; }
+
+/* ─── General Typography ─────────────────────────────────────────────────── */
+.narrative-kingdom h2 {
+  color: var(--nk-gold-light);
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 0 0 8px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.narrative-kingdom h3 {
+  color: var(--nk-text);
+  font-size: 1em;
+  font-weight: 600;
+  margin: 12px 0 6px;
+}
+
+.narrative-kingdom h4 {
+  color: var(--nk-text);
+  font-size: 0.92em;
+  margin: 8px 0 4px;
+}
+
+.nk-rule-text {
+  color: var(--nk-text-muted);
+  font-style: italic;
+  font-size: 0.88em;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+
+.nk-empty {
+  color: var(--nk-text-muted);
+  font-style: italic;
+  font-size: 0.88em;
+}
+
+/* ─── Buttons ────────────────────────────────────────────────────────────── */
+.nk-btn {
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.88em;
+  font-weight: 600;
+  padding: 5px 13px;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.nk-btn:hover:not(:disabled) {
+  background: var(--nk-primary-dim);
+  border-color: var(--nk-primary);
+  color: var(--nk-text);
+  box-shadow: 0 0 6px var(--nk-primary-glow);
+}
+
+.nk-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.nk-btn.secondary { color: var(--nk-text-muted); }
+.nk-btn.danger    { color: var(--nk-red); border-color: var(--nk-red); }
+.nk-btn.small     { font-size: 0.78em; padding: 3px 8px; }
+
+.nk-danger-zone {
+  margin-top: 24px;
+  padding-top: 12px;
+  border-top: 1px solid var(--nk-border);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.nk-btn.crit-success  { color: var(--nk-green);       border-color: var(--nk-green); }
+.nk-btn.success       { color: var(--nk-blue);         border-color: var(--nk-blue); }
+.nk-btn.failure       { color: var(--nk-text-muted); }
+.nk-btn.crit-failure  { color: var(--nk-red);          border-color: var(--nk-red); }
+
+/* ─── History Tab ─────────────────────────────────────────────────────────── */
+.nk-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.nk-history-entry {
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--nk-shadow-card);
+}
+
+.nk-history-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 8px 12px;
+  background: var(--nk-bg-card);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 0.15s;
+}
+
+.nk-history-summary::-webkit-details-marker { display: none; }
+
+.nk-history-summary::before {
+  content: "▶";
+  font-size: 0.7em;
+  transition: transform 0.15s;
+  flex-shrink: 0;
+  color: var(--nk-text-dim);
+}
+
+.nk-history-entry[open] > .nk-history-summary::before { transform: rotate(90deg); }
+.nk-history-summary:hover { background: var(--nk-bg-elevated); color: var(--nk-gold-light); }
+
+.nk-history-turn { font-weight: 700; font-size: 1em; }
+
+.nk-history-date {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: 4px;
+  padding: 1px 7px;
+}
+
+.nk-history-event-pill {
+  font-size: 0.82em;
+  color: var(--nk-text-muted);
+  font-style: italic;
+}
+
+.nk-history-absent {
+  font-size: 0.78em;
+  color: var(--nk-red);
+  border: 1px solid var(--nk-red);
+  border-radius: 4px;
+  padding: 1px 6px;
+}
+
+.nk-history-body {
+  padding: 10px 14px;
+  border-top: 1px solid var(--nk-border);
+  font-size: 0.88em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nk-history-section h4 { margin: 0 0 5px; color: var(--nk-gold-light); font-size: 0.92em; }
+.nk-history-items { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 6px; }
+.nk-history-items li { line-height: 1.5; }
+.nk-history-meta { color: var(--nk-text-muted); font-size: 0.88em; margin-left: 6px; }
+.nk-history-event-row { display: flex; align-items: center; gap: 8px; }
+
+.nk-history-outcome-badge {
+  font-size: 0.82em;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.nk-history-outcome-badge.success {
+  color: var(--nk-green);
+  border: 1px solid var(--nk-green);
+  background: rgba(92,184,92,.1);
+}
+
+.nk-history-outcome-badge.failure {
+  color: var(--nk-red);
+  border: 1px solid var(--nk-red);
+  background: rgba(224,82,82,.1);
+}
+
+.nk-history-outcome-badge.neutral {
+  color: var(--nk-text-muted);
+  border: 1px solid var(--nk-border-light);
+  background: rgba(160,160,170,.08);
+}
+
+.nk-history-outcome-text {
+  margin: 3px 0 0;
+  color: var(--nk-text-muted);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ─── Catalog Tab ────────────────────────────────────────────────────────── */
+.nk-catalog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.nk-catalog-header h2 { margin: 0; }
+.nk-catalog-actions { display: flex; gap: 6px; }
+.nk-catalog-list { display: flex; flex-direction: column; gap: 5px; margin-top: 10px; }
+
+.nk-catalog-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.nk-catalog-row:hover {
+  border-color: var(--nk-border-light);
+  background: var(--nk-bg-elevated);
+}
+
+.nk-catalog-row-info { display: flex; align-items: center; gap: 8px; flex: 1; min-width: 0; flex-wrap: wrap; }
+.nk-catalog-name { font-weight: 700; font-size: 0.95em; }
+.nk-catalog-subtitle { color: var(--nk-text-muted); font-size: 0.82em; }
+.nk-catalog-traits { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.nk-catalog-trait {
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: 4px;
+  padding: 1px 6px;
+  font-size: 0.76em;
+  color: var(--nk-text-muted);
+}
+
+.nk-catalog-row-btns { display: flex; gap: 4px; flex-shrink: 0; }
+
+/* Catalog edit dialog form */
+.nk-catalog-form {
+  /* DialogV2 is appended to <body>, outside .narrative-kingdom, so the palette
+     vars don't cascade in — re-declare them here (custom props inherit to the
+     inputs) or the fields fall back to transparent bg + invisible borders. */
+  --nk-bg: #1a1a1d; --nk-bg-card: #232328; --nk-bg-elevated: #2c2c32;
+  --nk-border: #3a3a42; --nk-border-light: #4c4c56;
+  --nk-text: #e4e4e8; --nk-text-muted: #9a9aa4;
+  --nk-primary: #6aa84f; --nk-primary-glow: rgba(106, 168, 79, 0.35);
+  --nk-radius: 6px;
+  display: flex; flex-direction: column; gap: 10px; padding: 4px 8px 4px 0;
+  max-height: 62vh; overflow-y: auto; overflow-x: hidden;
+}
+/* Give the controls a slightly elevated fill so they read against the dialog. */
+.nk-catalog-form .nk-cf-row input, .nk-catalog-form .nk-cf-row textarea { background: var(--nk-bg-elevated); }
+.nk-cf-row { display: flex; flex-direction: column; gap: 4px; }
+.nk-cf-row label { font-size: 0.85em; font-weight: 700; color: var(--nk-text-muted); }
+.nk-cf-hint { font-weight: normal; opacity: 0.7; }
+
+.nk-cf-row input, .nk-cf-row textarea {
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.9em;
+  padding: 6px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.nk-cf-outcomes { gap: 6px; }
+.nk-cf-outcome {
+  border: 1px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  padding: 6px 8px;
+  margin: 0;
+  min-inline-size: 0;
+}
+.nk-cf-outcome legend { font-size: 0.82em; font-weight: 700; color: var(--nk-text); padding: 0 4px; }
+.nk-cf-outcome .nk-cf-sub { font-size: 0.72em; font-weight: 600; color: var(--nk-text-muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.03em; }
+.nk-cf-outcome textarea { margin-top: 2px; }
+
+.nk-cf-row input:focus, .nk-cf-row textarea:focus {
+  outline: none;
+  border-color: var(--nk-primary);
+  box-shadow: 0 0 0 2px var(--nk-primary-glow);
+}
+
+/* ─── Tables ─────────────────────────────────────────────────────────────── */
+.nk-table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.88em;
+  margin-top: 8px;
+}
+
+.nk-table th {
+  background: var(--nk-deep);
+  color: var(--nk-gold-light);
+  padding: 6px 10px;
+  text-align: left;
+  border-bottom: 2px solid var(--nk-primary-dim);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.nk-table td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--nk-border);
+}
+
+/* ─── Kingdom Turn ───────────────────────────────────────────────────────── */
+.nk-turn-tracker { margin-top: 10px; }
+
+.nk-turn-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.nk-turn-number {
+  color: var(--nk-gold-light);
+  font-weight: 700;
+  font-size: 1.1em;
+  letter-spacing: 0.03em;
+}
+
+/* ─── Phase blocks (stepper) ─────────────────────────────────────────────── */
+.nk-turn-phases { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.nk-phase {
+  flex: 1;
+  min-width: 240px;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--nk-shadow-card);
+}
+
+.nk-phase.complete {
+  border-color: var(--nk-primary-dim);
+  opacity: 0.75;
+}
+
+.nk-phase-block {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  box-shadow: var(--nk-shadow-card);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, opacity 0.2s;
+}
+
+.nk-phase-block.active {
+  border-color: var(--nk-primary);
+  box-shadow: 0 0 10px var(--nk-primary-glow);
+}
+
+.nk-phase-block.done {
+  opacity: 0.6;
+}
+
+.nk-phase-block.locked {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.nk-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: var(--nk-bg-elevated);
+  border-bottom: 1px solid var(--nk-border);
+}
+
+.nk-phase-block.active .nk-phase-header {
+  background: var(--nk-deep);
+  border-bottom-color: var(--nk-primary-dim);
+}
+
+.nk-phase-header h3 { margin: 0; font-size: 1em; }
+
+.nk-phase-num {
+  background: var(--nk-primary-dim);
+  border-radius: 50%;
+  color: var(--nk-text);
+  font-size: 0.82em;
+  font-weight: 700;
+  flex-shrink: 0;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  width: 22px;
+}
+
+.nk-phase-block.active .nk-phase-num {
+  background: var(--nk-primary);
+}
+
+.nk-phase-done-badge {
+  color: var(--nk-green);
+  font-size: 0.82em;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.nk-phase-desc {
+  color: var(--nk-text-muted);
+  font-size: 0.88em;
+  font-style: italic;
+  margin: 0 0 10px;
+  padding: 10px 14px 0;
+  line-height: 1.5;
+}
+
+.nk-phase-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 0 14px 12px;
+}
+
+/* ─── Attendance list ────────────────────────────────────────────────────── */
+.nk-leader-attendance { list-style: none; padding: 0 14px; margin: 6px 0 10px; }
+.nk-leader-attendance li { margin-bottom: 5px; font-size: 0.9em; }
+.nk-leader-attendance label { display: flex; align-items: center; gap: 7px; cursor: pointer; }
+
+.nk-attendance-projects {
+  color: var(--nk-text-dim);
+  font-size: 0.8em;
+  margin-left: 4px;
+}
+
+/* ─── Day progress pip bar ───────────────────────────────────────────────── */
+.nk-day-counter {
+  margin-left: auto;
+  color: var(--nk-gold-light);
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.nk-day-progress {
+  display: flex;
+  gap: 6px;
+  padding: 8px 14px 4px;
+}
+
+.nk-day-pip {
+  width: 28px;
+  height: 10px;
+  border-radius: 5px;
+  background: var(--nk-seg-empty);
+  border: 1px solid var(--nk-border);
+  transition: background 0.2s;
+}
+
+.nk-day-pip.filled { background: var(--nk-primary); border-color: var(--nk-primary); }
+.nk-day-pip.current { background: var(--nk-gold); border-color: var(--nk-gold-light); box-shadow: 0 0 6px rgba(201,168,76,.5); }
+
+/* ─── Per-leader day rolls ───────────────────────────────────────────────── */
+.nk-day-leaders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 14px;
+}
+
+.nk-day-leader h4 {
+  color: var(--nk-gold-light);
+  margin: 0 0 6px;
+}
+
+.nk-day-projects { display: flex; flex-direction: column; gap: 8px; }
+
+.nk-day-project {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 6px 10px;
+}
+
+.nk-day-project-name {
+  font-weight: 600;
+  font-size: 0.9em;
+  flex: 0 0 150px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Keep the info block from stealing all the row width, so the clock + roll
+   buttons sit in a consistent column across projects. */
+.nk-day-project-info { flex: 0 1 auto; }
+.nk-day-project .nk-roll-buttons { margin-left: auto; }
+
+/* ─── Turn XP summary ────────────────────────────────────────────────────── */
+.nk-turn-xp-summary {
+  margin-top: 6px;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-primary);
+  border-radius: var(--nk-radius);
+  padding: 8px 14px;
+  font-size: 0.9em;
+}
+
+.nk-turn-history { margin-top: 16px; }
+
+/* ─── Projects ───────────────────────────────────────────────────────────── */
+.nk-leader-projects {
+  margin-bottom: 20px;
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-left: 4px solid var(--nk-gold);
+  border-radius: var(--nk-radius-lg);
+  padding: 12px 14px 14px;
+  box-shadow: var(--nk-shadow-card);
+}
+
+.nk-leader-projects > h3 {
+  margin: 0 0 12px;
+  padding: 6px 10px;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: var(--nk-gold-light);
+  background: linear-gradient(90deg, var(--nk-primary-dim) 0%, transparent 100%);
+  border-radius: var(--nk-radius);
+  border-bottom: 1px solid var(--nk-border-light);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nk-leader-projects > h3::before {
+  content: "\f521"; /* fa-crown */
+  font-family: "Font Awesome 7 Pro", "Font Awesome 6 Pro", "Font Awesome 6 Free", "Font Awesome 5 Pro";
+  font-weight: 900;
+  font-size: 0.85em;
+  color: var(--nk-gold);
+}
+
+.nk-project-list { display: flex; flex-direction: column; gap: 12px; }
+
+.nk-project-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--nk-shadow-card);
+  transition: border-color 0.15s;
+}
+
+.nk-project-card:hover { border-color: var(--nk-border-light); }
+.nk-project-card.complete { border-color: var(--nk-primary-dim); opacity: 0.8; }
+
+.nk-project-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.nk-project-name {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  color: var(--nk-text);
+  font-size: 1em;
+  font-family: inherit;
+  font-weight: 600;
+  padding: 2px 4px;
+}
+
+.nk-project-name:focus {
+  outline: none;
+  border-bottom-color: var(--nk-primary);
+}
+
+.nk-complexity-badge {
+  border-radius: var(--nk-radius);
+  font-size: 0.78em;
+  font-weight: 700;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.nk-complexity-badge.c4  { background: rgba(84,132,51,.15); color: var(--nk-primary); border: 1px solid var(--nk-primary-dim); }
+.nk-complexity-badge.c6  { background: rgba(74,159,212,.1);  color: var(--nk-blue);    border: 1px solid var(--nk-blue); }
+.nk-complexity-badge.c10 { background: rgba(224,82,82,.1);   color: var(--nk-red);     border: 1px solid var(--nk-red); }
+
+/* ─── Clock Segments ─────────────────────────────────────────────────────── */
+.nk-clock { margin: 10px 0; }
+
+.nk-clock-segments {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.nk-segment {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--nk-seg-empty);
+  border: 2px solid var(--nk-border);
+  transition: background 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.nk-segment.filled {
+  background: var(--nk-seg-filled);
+  border-color: var(--nk-primary);
+  box-shadow: 0 0 7px rgba(84, 132, 51, 0.55);
+}
+
+.nk-segment.green {
+  background: var(--nk-green);
+  border-color: #3a8a3a;
+  box-shadow: 0 0 7px rgba(92, 184, 92, 0.5);
+}
+
+.nk-segment.red {
+  background: var(--nk-red);
+  border-color: #a03030;
+  box-shadow: 0 0 7px rgba(224, 82, 82, 0.5);
+}
+
+.nk-clock-label {
+  color: var(--nk-text-muted);
+  font-size: 0.8em;
+  margin-top: 4px;
+  display: block;
+}
+
+/* ─── Project Actions ────────────────────────────────────────────────────── */
+.nk-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88em;
+  margin-top: 8px;
+}
+
+.nk-project-notes { margin-top: 10px; }
+
+.nk-project-actions label { display: flex; align-items: center; gap: 5px; }
+
+.nk-project-actions input[type=text] {
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.9em;
+  padding: 3px 8px;
+  width: 140px;
+  transition: border-color 0.15s;
+}
+
+.nk-project-actions input[type=text]:focus {
+  outline: none;
+  border-color: var(--nk-primary);
+}
+
+.nk-roll-buttons { display: flex; gap: 5px; flex-wrap: wrap; }
+
+.nk-resolved-block {
+  padding: 9px 12px;
+  border-radius: var(--nk-radius);
+  border-left: 4px solid transparent;
+}
+
+.nk-resolved-block.success {
+  border-color: var(--nk-green);
+  background: rgba(92, 184, 92, 0.08);
+}
+
+.nk-resolved-block.failure {
+  border-color: var(--nk-red);
+  background: rgba(224, 82, 82, 0.08);
+}
+
+.nk-resolved-block.neutral {
+  border-color: var(--nk-border-light);
+  background: rgba(160, 160, 170, 0.06);
+}
+
+.nk-complete-badge { font-size: 0.88em; font-weight: 700; }
+.nk-resolved-block.success .nk-complete-badge { color: var(--nk-green); }
+.nk-resolved-block.failure .nk-complete-badge { color: var(--nk-red); }
+.nk-resolved-block.neutral .nk-complete-badge { color: var(--nk-text-muted); }
+
+/* Event outcome text: RP (players) in italics, mechanics (GM) muted with a tag. */
+.nk-resolved-rp { margin: 4px 0 0; font-style: italic; color: var(--nk-text); }
+.nk-resolved-gm { margin: 5px 0 0; font-size: 0.9em; color: var(--nk-text-muted); }
+.nk-history-outcome-gm { margin: 2px 0 0; font-size: 0.85em; color: var(--nk-text-muted); }
+.nk-gm-tag {
+  font-size: 0.68em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nk-orange);
+  border: 1px solid var(--nk-orange);
+  border-radius: 3px;
+  padding: 0 4px;
+  margin-right: 4px;
+}
+.nk-earn-income-ref {
+  margin: 0 0 12px;
+  font-size: 0.85em;
+  color: var(--nk-text-muted);
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 5px 10px;
+}
+.nk-earn-income-ref .nk-hint { font-style: italic; opacity: 0.8; }
+
+.nk-resolved-outcome-text {
+  margin: 6px 0 0;
+  font-size: 0.9em;
+  color: var(--nk-text);
+  line-height: 1.5;
+}
+
+.nk-add-project {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nk-complexity-select {
+  flex: 1;
+  min-width: 0;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.85em;
+  padding: 3px 6px;
+  height: 28px;
+}
+
+.nk-add-project .nk-btn {
+  white-space: nowrap;
+  font-size: 0.85em;
+  padding: 3px 10px;
+  height: 28px;
+}
+
+/* ─── Events ─────────────────────────────────────────────────────────────── */
+.nk-event-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  margin-bottom: 12px;
+  padding: 12px 14px;
+  box-shadow: var(--nk-shadow-card);
+  transition: border-color 0.15s;
+}
+
+.nk-event-card:hover { border-color: var(--nk-border-light); }
+.nk-event-card.resolved { border-color: var(--nk-primary-dim); opacity: 0.8; }
+
+.nk-event-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.nk-event-header input[type=text] {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 2px 4px;
+}
+
+.nk-event-header input[type=text]:focus {
+  outline: none;
+  border-bottom-color: var(--nk-primary);
+}
+
+.nk-event-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.nk-add-event { margin-top: 14px; }
+.nk-event-clock-info { font-size: 0.9em; color: var(--nk-text-muted); margin-bottom: 8px; }
+
+/* ─── Benefits ───────────────────────────────────────────────────────────── */
+.nk-benefits-table { font-size: 0.88em; }
+.nk-benefit-row { opacity: 0.4; }
+.nk-benefit-row.unlocked { opacity: 1; }
+.nk-benefit-level { text-align: center; color: var(--nk-gold-light); font-weight: 700; width: 48px; }
+.nk-benefit-name  { font-weight: 700; color: var(--nk-text); width: 180px; }
+.nk-benefit-desc  { color: var(--nk-text-muted); font-size: 0.9em; }
+.nk-benefit-status { text-align: center; color: var(--nk-green); width: 48px; font-weight: 700; }
+
+.nk-benefit-details { margin-top: 16px; }
+
+.nk-benefit-card {
+  background: var(--nk-bg-card);
+  border-left: 3px solid var(--nk-primary);
+  border-radius: var(--nk-radius);
+  font-size: 0.88em;
+  margin-bottom: 8px;
+  padding: 8px 12px;
+}
+
+.nk-benefit-card p { color: var(--nk-text-muted); margin: 4px 0 0; }
+
+/* ─── Leaders ────────────────────────────────────────────────────────────── */
+.nk-leaders-drop-zone {
+  border: 2px dashed var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.nk-leaders-drop-zone.nk-drag-over {
+  border-color: var(--nk-primary);
+  background: rgba(84, 132, 51, 0.07);
+}
+
+.nk-drop-hint {
+  color: var(--nk-text-muted);
+  font-size: 0.85em;
+  font-style: italic;
+  padding: 6px 4px 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nk-actor-icon {
+  color: var(--nk-gold);
+  font-size: 1em;
+  flex-shrink: 0;
+}
+
+.nk-leaders-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; }
+
+.nk-leader-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 12px 14px;
+  box-shadow: var(--nk-shadow-card);
+  transition: border-color 0.15s;
+}
+
+.nk-leader-card:hover { border-color: var(--nk-border-light); }
+
+.nk-leader-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+
+.nk-leader-name {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  color: var(--nk-gold-light);
+  font-family: inherit;
+  font-size: 1.05em;
+  font-weight: 700;
+  padding: 2px 4px;
+}
+
+.nk-leader-name:focus {
+  outline: none;
+  border-bottom-color: var(--nk-primary);
+}
+
+.nk-leader-role {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  color: var(--nk-text-muted);
+  font-family: inherit;
+  font-size: 0.9em;
+  padding: 2px 4px;
+  width: 160px;
+}
+
+.nk-leader-stats { display: flex; align-items: center; gap: 16px; font-size: 0.88em; }
+.nk-leader-stats label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+
+.nk-xp-formula {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-primary-dim);
+  border-radius: var(--nk-radius);
+  font-size: 0.88em;
+  margin-top: 14px;
+  padding: 10px 14px;
+}
+
+.nk-xp-formula p { color: var(--nk-text-muted); margin: 2px 0; }
+
+.nk-hex-formula-details { margin-top: 8px; }
+
+.nk-hex-formula-details summary {
+  cursor: pointer;
+  color: var(--nk-gold-light);
+  font-size: 0.92em;
+  margin-bottom: 5px;
+}
+
+.nk-hex-formula-details code {
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-border);
+  border-radius: 3px;
+  padding: 1px 6px;
+  font-size: 0.88em;
+  color: var(--nk-gold);
+}
+
+/* ─── Event catalog picker ───────────────────────────────────────────────── */
+.nk-event-picker {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.nk-event-picker select {
+  flex: 1;
+  min-width: 180px;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  padding: 4px 8px;
+}
+
+/* ─── Event detail content ───────────────────────────────────────────────── */
+.nk-event-details {
+  margin-top: 8px;
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  overflow: hidden;
+}
+
+.nk-event-details > summary {
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 0.85em;
+  color: var(--nk-text-muted);
+  background: var(--nk-bg-card);
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s;
+}
+
+.nk-event-details > summary::before {
+  content: "▶";
+  font-size: 0.7em;
+  transition: transform 0.15s;
+}
+
+.nk-event-details[open] > summary::before { transform: rotate(90deg); }
+.nk-event-details > summary:hover { color: var(--nk-gold-light); }
+
+.nk-event-content-body {
+  padding: 10px 12px 6px;
+  font-size: 0.85em;
+  line-height: 1.55;
+  border-top: 1px solid var(--nk-border);
+}
+
+.nk-event-content-body ul { padding-left: 1.2em; margin: 4px 0; }
+.nk-event-content-body li { margin: 2px 0; }
+.nk-event-content-body .subtitle { color: var(--nk-gold-light); margin: 0 0 5px; font-weight: 600; }
+
+.nk-event-content-body .traits {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 7px;
+  flex-wrap: wrap;
+}
+
+.nk-event-content-body .traits li {
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-size: 0.9em;
+}
+
+.nk-event-content-body .nk-location { color: var(--nk-text-muted); font-style: italic; margin: 0 0 5px; }
+.nk-event-content-body .nk-description { margin: 0 0 7px; }
+
+/* ─── Structured event fields ────────────────────────────────────────────── */
+.nk-event-checks { margin: 8px 0; }
+.nk-checks-label { margin: 0 0 4px; font-weight: 700; }
+.nk-checks-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+
+.nk-checks-list li {
+  background: var(--nk-bg-header);
+  border-left: 3px solid var(--nk-primary-dim);
+  padding: 4px 9px;
+  border-radius: 0 4px 4px 0;
+}
+
+.nk-outcomes { list-style: none; padding: 0; margin: 8px 0; display: flex; flex-direction: column; gap: 5px; }
+
+.nk-outcomes li {
+  padding: 5px 10px;
+  border-radius: 4px;
+  border-left: 4px solid transparent;
+}
+
+.nk-outcomes li.success { border-color: var(--nk-green);  background: rgba(92,184,92,.08); }
+.nk-outcomes li.neutral { border-color: var(--nk-border-light); background: rgba(160,160,170,.06); }
+.nk-outcomes li.failure { border-color: var(--nk-red);    background: rgba(224,82,82,.08); }
+
+.nk-resolution { margin: 7px 0 2px; border-top: 1px solid var(--nk-border); padding-top: 6px; }
+.nk-special    { margin: 4px 0; font-style: italic; color: var(--nk-text-muted); }
+
+/* ─── Party sheet injected button ────────────────────────────────────────── */
+.nk-party-sheet-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+/* ─── Inputs (global overrides for selects inside the sheet) ─────────────── */
+.narrative-kingdom select {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  padding: 3px 7px;
+}
+
+.narrative-kingdom input[type=number],
+.narrative-kingdom input[type=text] {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  padding: 3px 7px;
+}
+
+.narrative-kingdom input:focus,
+.narrative-kingdom select:focus {
+  outline: none;
+  border-color: var(--nk-primary);
+  box-shadow: 0 0 0 2px var(--nk-primary-glow);
+}
+
+/* ─── Scrollbar styling ──────────────────────────────────────────────────── */
+.nk-tab-content::-webkit-scrollbar { width: 6px; }
+.nk-tab-content::-webkit-scrollbar-track { background: var(--nk-bg); }
+.nk-tab-content::-webkit-scrollbar-thumb { background: var(--nk-border-light); border-radius: 3px; }
+.nk-tab-content::-webkit-scrollbar-thumb:hover { background: var(--nk-primary-dim); }
+
+/* ─── Enriched Notes Fields ──────────────────────────────────────────────── */
+.nk-notes-field { position: relative; }
+
+.nk-notes-display {
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  cursor: text;
+  font-family: inherit;
+  font-size: 0.85em;
+  line-height: 1.55;
+  min-height: 36px;
+  padding: 6px 8px;
+  transition: border-color 0.15s, background 0.15s;
+  word-break: break-word;
+}
+
+.nk-notes-display:hover {
+  border-color: var(--nk-border-light);
+  background: var(--nk-bg-card);
+}
+
+.nk-notes-display.empty::before {
+  content: attr(title);
+  color: var(--nk-text-dim);
+  font-style: italic;
+  pointer-events: none;
+}
+
+/* Foundry enriched content link styles inside notes */
+.nk-notes-display a.content-link {
+  color: var(--nk-blue);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--nk-blue);
+}
+
+.nk-notes-display a.content-link:hover { color: var(--nk-gold-light); border-bottom-color: var(--nk-gold-light); }
+.nk-notes-display a.content-link i    { margin-right: 3px; font-size: 0.9em; }
+
+.nk-notes-textarea {
+  width: 100%;
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-primary);
+  border-radius: var(--nk-radius);
+  box-shadow: 0 0 0 2px var(--nk-primary-glow);
+  box-sizing: border-box;
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.85em;
+  min-height: 52px;
+  padding: 6px 8px;
+  resize: vertical;
+}
+
+.nk-notes-textarea:focus { outline: none; }
+.nk-notes-textarea.hidden { display: none; }
+
+/* ─── Rule info box ──────────────────────────────────────────────────────── */
+.nk-rule-box {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-primary-dim);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text-muted);
+  font-size: 0.88em;
+  line-height: 1.6;
+  margin-bottom: 14px;
+  padding: 10px 14px;
+}
+
+.nk-rule-box strong { color: var(--nk-text); }
+.nk-rule-box ul { margin: 4px 0 0; padding-left: 1.4em; }
+.nk-rule-box li { margin: 2px 0; }
+
+/* Rules / Reference tab */
+.nk-rules-tab h2 { margin-bottom: 4px; }
+.nk-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 10px;
+}
+.nk-rule-section {
+  border: 1px solid var(--nk-border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.nk-rule-section h3 {
+  margin: 0 0 6px;
+  font-size: 0.95em;
+  color: var(--nk-gold-light);
+}
+.nk-rule-section p { margin: 0 0 6px; font-size: 0.86em; line-height: 1.45; color: var(--nk-text-muted); }
+.nk-rule-section p:last-child { margin-bottom: 0; }
+.nk-rule-section ul, .nk-rule-section ol { margin: 4px 0 6px; padding-left: 1.3em; font-size: 0.86em; color: var(--nk-text-muted); }
+.nk-rule-section li { margin: 2px 0; }
+/* Numbered turn walkthrough */
+.nk-rule-steps { padding-left: 1.5em; }
+.nk-rule-steps li { margin: 5px 0; line-height: 1.45; }
+.nk-rule-steps li::marker { color: var(--nk-gold); font-family: "Modesto Condensed", "Signika", serif; font-weight: 700; }
+.nk-rule-section strong { color: var(--nk-text); }
+.nk-rule-section-wide { grid-column: 1 / -1; }
+.nk-hint-line { font-size: 0.82em; color: var(--nk-text-muted); margin: 0 0 10px; }
+
+/* ── Relations / Factions tab ────────────────────────────────────────────── */
+.nk-factions-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.nk-faction-card {
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  background: var(--nk-bg-card);
+  padding: 10px 12px;
+}
+.nk-faction-card input[type="text"], .nk-faction-card input[type="number"] {
+  background: var(--nk-bg);
+  border: 1px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.9em;
+  padding: 5px 8px;
+  box-sizing: border-box;
+}
+.nk-faction-header { display: flex; align-items: center; gap: 8px; }
+.nk-faction-name { flex: 1; font-weight: 700; font-size: 1.02em; }
+.nk-faction-meta { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: flex-end; margin-top: 8px; }
+.nk-faction-type-field { display: flex; flex-direction: column; gap: 3px; font-size: 0.78em; font-weight: 600; color: var(--nk-text-muted); text-transform: uppercase; letter-spacing: 0.03em; flex: 1 1 220px; }
+.nk-faction-rep { display: flex; align-items: center; gap: 6px; }
+.nk-rep-label { font-size: 0.78em; font-weight: 600; color: var(--nk-text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.nk-rep-input { width: 56px; text-align: center; }
+.nk-faction-rep .nk-btn { min-width: 26px; padding: 2px 8px; font-weight: 700; }
+
+.nk-standing-badge {
+  font-size: 0.76em; font-weight: 700; padding: 2px 9px; border-radius: 10px;
+  white-space: nowrap; border: 1px solid transparent; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.nk-faction-card.standing-revered  { border-left-color: #6abf6a; }
+.nk-faction-card.standing-admired  { border-left-color: #6aa84f; }
+.nk-faction-card.standing-liked    { border-left-color: #a5c66a; }
+.nk-faction-card.standing-ignored  { border-left-color: #6a6a74; }
+.nk-faction-card.standing-disliked { border-left-color: #e0a020; }
+.nk-faction-card.standing-hated    { border-left-color: #e07c20; }
+.nk-faction-card.standing-hunted   { border-left-color: #e05252; }
+.nk-standing-badge.standing-revered  { color: #bff0b5; background: rgba(106,191,106,0.16); border-color: #6abf6a; }
+.nk-standing-badge.standing-admired  { color: #c3e2ad; background: rgba(106,168,79,0.16);  border-color: #6aa84f; }
+.nk-standing-badge.standing-liked    { color: #dcecb6; background: rgba(165,198,106,0.15); border-color: #a5c66a; }
+.nk-standing-badge.standing-ignored  { color: #c2c2ca; background: rgba(154,154,164,0.15); border-color: #6a6a74; }
+.nk-standing-badge.standing-disliked { color: #f0d18f; background: rgba(224,160,32,0.15);  border-color: #e0a020; }
+.nk-standing-badge.standing-hated    { color: #f2c19a; background: rgba(224,124,32,0.15);  border-color: #e07c20; }
+.nk-standing-badge.standing-hunted   { color: #f2b0b0; background: rgba(224,82,82,0.16);   border-color: #e05252; }
+
+.nk-faction-notes-field { margin-top: 8px; }
+.nk-faction-sublabel, .nk-faction-history h4 { font-size: 0.78em; font-weight: 700; color: var(--nk-text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin: 0; }
+.nk-faction-notes {
+  width: 100%; box-sizing: border-box; min-height: 42px; resize: vertical; margin-top: 3px;
+  background: var(--nk-bg); border: 1px solid var(--nk-border-light); border-radius: var(--nk-radius);
+  color: var(--nk-text); font-family: inherit; font-size: 0.88em; padding: 6px 8px;
+}
+.nk-faction-history { margin-top: 10px; }
+.nk-faction-history-header { margin-bottom: 4px; }
+.nk-faction-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.nk-faction-log-entry { display: flex; align-items: center; gap: 6px; }
+.nk-faction-log-date-input { flex: 0 0 140px; width: 140px; font-size: 0.76em; color: var(--nk-gold-light); }
+.nk-faction-log-text { flex: 1; }
+
+/* ── Settlement structures / landmarks ───────────────────────────────────── */
+.nk-settlement-structures { margin-top: 8px; }
+.nk-structures-header { margin-bottom: 4px; }
+.nk-structures-header label { font-size: 0.78em; font-weight: 700; color: var(--nk-text-muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.nk-structure-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.nk-structure-entry { display: flex; align-items: center; gap: 6px; }
+.nk-structure-entry input[type="text"] {
+  background: var(--nk-bg); border: 1px solid var(--nk-border-light); border-radius: var(--nk-radius);
+  color: var(--nk-text); font-family: inherit; font-size: 0.85em; padding: 4px 8px; box-sizing: border-box;
+}
+.nk-structure-name { flex: 0 0 190px; font-weight: 600; }
+.nk-structure-note { flex: 1; }
+
+/* ─── Armies Tab ─────────────────────────────────────────────────────────── */
+.nk-armies-drop-zone {
+  border: 2px dashed var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 8px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.nk-armies-drop-zone.nk-drag-over {
+  border-color: var(--nk-primary);
+  background: rgba(84, 132, 51, 0.07);
+}
+
+.nk-armies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.nk-army-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 10px 12px;
+  box-shadow: var(--nk-shadow-card);
+  transition: border-color 0.15s;
+}
+
+.nk-army-card:hover { border-color: var(--nk-border-light); }
+.nk-army-card.missing { border-color: var(--nk-orange); opacity: 0.75; }
+
+.nk-army-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.nk-army-portrait {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--nk-radius);
+  border: 1px solid var(--nk-border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.nk-army-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nk-btn-link {
+  background: none;
+  border: none;
+  display: block;
+  padding: 0;
+  color: var(--nk-gold-light);
+  font-family: inherit;
+  font-size: 1em;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  width: 100%;
+}
+
+.nk-btn-link:hover { color: var(--nk-gold); }
+
+.nk-army-missing {
+  color: var(--nk-orange);
+  font-size: 0.8em;
+}
+
+.nk-army-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nk-army-stat {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: 4px;
+  padding: 1px 7px;
+}
+
+/* Army header action buttons (Move / remove) pinned to the right of the card header. */
+.nk-army-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* Live army conditions/effects readout. */
+.nk-army-conditions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+.nk-army-stat.condition {
+  color: var(--nk-orange);
+  border-color: var(--nk-orange);
+  background: rgba(224, 124, 32, 0.12);
+}
+.nk-army-stat.rout-hit {
+  color: #e05a5a;
+  border-color: #e05a5a;
+  background: rgba(224, 90, 90, 0.14);
+}
+.nk-army-stat.mismatch {
+  color: var(--nk-orange);
+  border-color: var(--nk-orange);
+  background: rgba(224, 124, 32, 0.12);
+}
+.nk-army-card.routed { border-color: #e05a5a; }
+
+/* Army command panel — allowance / recruit DC / credits + recruit button. */
+.nk-army-command {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.nk-acs {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 6px 12px;
+  min-width: 120px;
+}
+.nk-acs-label { font-size: 0.72em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--nk-text-muted); }
+.nk-acs-value { font-size: 1.4em; font-weight: 700; line-height: 1.15; }
+.nk-acs-value.over { color: var(--nk-orange); }
+.nk-acs-sub { font-size: 0.72em; color: var(--nk-text-muted); }
+.nk-army-command .nk-recruit-btn { margin-left: auto; align-self: center; }
+.nk-btn.small.icon { padding: 3px 7px; }
+
+/* Skill-field autocomplete dropdown. */
+.nk-autocomplete {
+  position: fixed;
+  z-index: 10000;
+  /* This element is appended to <body>, outside the .narrative-kingdom scope where
+     the palette vars are defined — re-declare the ones it needs so it isn't see-through. */
+  --nk-bg-card: #232328;
+  --nk-bg-header: #141416;
+  --nk-border-light: #4c4c56;
+  --nk-orange: #e07c20;
+  --nk-text: #e4e4e8;
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border-light);
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.55);
+  color: var(--nk-text);
+  max-height: 180px;
+  overflow-y: auto;
+}
+.nk-ac-item {
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  white-space: nowrap;
+  color: var(--nk-text);
+}
+.nk-ac-item:hover,
+.nk-ac-item.active {
+  background: var(--nk-bg-header);
+  color: var(--nk-orange);
+}
+
+.nk-settlements-warning {
+  background: rgba(224, 124, 32, 0.12);
+  border: 1px solid var(--nk-orange);
+  border-left: 4px solid var(--nk-orange);
+  border-radius: var(--nk-radius);
+  color: var(--nk-orange);
+  font-size: 0.9em;
+  font-weight: 600;
+  margin-bottom: 14px;
+  padding: 8px 12px;
+}
+
+.nk-settlements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+  align-items: start;
+  margin-top: 8px;
+}
+.nk-settlement-card.expanded { grid-column: 1 / -1; }
+
+.nk-settlement-compact {
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  background: var(--nk-bg-card);
+  padding: 9px 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.nk-settlement-compact:hover { border-color: var(--nk-primary); background: var(--nk-bg-elevated); }
+.nk-settlement-compact.is-capital { border-left-color: var(--nk-gold); }
+.nk-compact-head { display: flex; align-items: center; gap: 6px; }
+.nk-compact-head .nk-capital-crown { color: var(--nk-gold); }
+.nk-compact-name { font-weight: 700; font-size: 0.98em; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nk-compact-stage { font-size: 0.66em; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 700; color: var(--nk-text-muted); border: 1px solid var(--nk-border-light); border-radius: 8px; padding: 1px 7px; white-space: nowrap; }
+.nk-compact-meta { display: flex; flex-wrap: wrap; gap: 3px 12px; margin-top: 6px; font-size: 0.78em; color: var(--nk-text-muted); }
+.nk-compact-progress { margin-top: 7px; height: 4px; background: var(--nk-seg-empty); border-radius: 2px; overflow: hidden; }
+.nk-compact-progress-fill { height: 100%; background: var(--nk-primary); }
+.nk-compact-progress-fill.ready { background: var(--nk-gold); }
+.nk-settlement-collapse { background: none; border: none; color: var(--nk-text-muted); cursor: pointer; font-size: 1em; padding: 0 4px; line-height: 1; }
+.nk-settlement-collapse:hover { color: var(--nk-text); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Fantasy typography & flourishes — exploration pass v1 (easy to tweak/revert).
+   Display face "Modesto Condensed" = Foundry's Pathfinder heading font.
+   Body stays Signika for legibility.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.nk-kingdom-sheet h2,
+.nk-kingdom-sheet h3,
+.nk-tab-btn {
+  font-family: "Modesto Condensed", "Signika", serif;
+}
+
+/* Kingdom name — a display banner with an inline ✎ rename field */
+.nk-title { display: flex; align-items: center; gap: 8px; }
+.nk-title-display, .nk-title input {
+  font-family: "Modesto Condensed", "Signika", serif;
+  font-size: 1.0em;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--nk-gold-light);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+}
+.nk-title-display { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.nk-title input { flex: 1 1 auto; min-width: 0; }
+.nk-title-edit {
+  background: none; border: none; cursor: pointer; padding: 2px 5px; line-height: 1;
+  color: var(--nk-text-muted); font-size: 0.32em; opacity: 0.55; align-self: center;
+  transition: opacity 0.15s, color 0.15s;
+}
+.nk-title-edit:hover { opacity: 1; color: var(--nk-gold-light); }
+
+/* Tab section titles — gold, with a fading ornamental rule beneath */
+.nk-tab-content h2 {
+  font-size: 1.7em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--nk-gold-light);
+  margin: 0 0 12px;
+  padding-bottom: 7px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(90deg, var(--nk-gold) 0%, var(--nk-border) 45%, transparent 85%) left bottom / 100% 2px no-repeat;
+}
+
+/* Sub-headers read like illuminated headings */
+.nk-kingdom-sheet h3 {
+  font-size: 1.24em;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--nk-gold);
+}
+
+/* Tabs read like chapter labels */
+.nk-tab-btn { letter-spacing: 0.06em; font-size: 1.04em; }
+.nk-tab-btn.active { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
+
+/* Per-tab section-title icons — Font Awesome, single-colour gold */
+.nk-turn-tab > h2::before,
+.nk-projects-tab > h2::before,
+.nk-events-tab > h2::before,
+.nk-history-tab > h2::before,
+.nk-benefits-tab > h2::before,
+.nk-leaders-tab > h2::before,
+.nk-settlements-tab > h2::before,
+.nk-armies-tab > h2::before,
+.nk-relations-tab > h2::before,
+.nk-notes-tab > h2::before,
+.nk-rules-tab > h2::before,
+.nk-catalog-tab > h2::before,
+.nk-settings-tab > h2::before {
+  font-family: "Font Awesome 7 Pro", "Font Awesome 6 Pro", "Font Awesome 6 Free", "Font Awesome 5 Pro";
+  font-weight: 900;
+  font-size: 0.62em;
+  color: var(--nk-gold);
+  -webkit-text-fill-color: var(--nk-gold);
+  text-shadow: none;
+  margin-right: 0.5em;
+  vertical-align: 0.14em;
+}
+.nk-turn-tab > h2::before        { content: "\f521"; } /* crown */
+.nk-projects-tab > h2::before    { content: "\f6e3"; } /* hammer */
+.nk-events-tab > h2::before      { content: "\f0e7"; } /* bolt */
+.nk-history-tab > h2::before     { content: "\f70e"; } /* scroll */
+.nk-benefits-tab > h2::before    { content: "\f559"; } /* award */
+.nk-leaders-tab > h2::before     { content: "\f0c0"; } /* users */
+.nk-settlements-tab > h2::before { content: "\f66f"; } /* landmark */
+.nk-armies-tab > h2::before      { content: "\f3ed"; } /* shield-halved */
+.nk-relations-tab > h2::before   { content: "\f4c6"; } /* handshake-simple */
+.nk-notes-tab > h2::before       { content: "\f52d"; } /* feather */
+.nk-rules-tab > h2::before       { content: "\f518"; } /* book-open */
+.nk-catalog-tab > h2::before     { content: "\f022"; } /* rectangle-list */
+.nk-settings-tab > h2::before    { content: "\f085"; } /* gears */
+
+/* ═══ Fancy v3 — depth, gilding & tactility ═══ */
+
+/* Engraved tracks with a gilded, top-lit fill */
+.nk-progress-bar-track, .nk-compact-progress {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.nk-progress-bar-fill, .nk-compact-progress-fill {
+  background: linear-gradient(180deg, #7cbf5f 0%, var(--nk-primary) 55%, #4d7d38 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+.nk-progress-bar-fill.ready, .nk-compact-progress-fill.ready {
+  background: linear-gradient(180deg, var(--nk-gold-light) 0%, var(--nk-gold) 55%, #9a7d33 100%);
+}
+
+/* Cards catch a faint top light + a little more depth (tome-page feel) */
+.nk-project-card, .nk-event-card, .nk-leader-card, .nk-faction-card,
+.nk-settlement-card, .nk-effect-card, .nk-rule-section, .nk-army-command,
+.nk-turn-tracker, .nk-settlement-compact {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Buttons get a subtle emboss */
+.nk-btn {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(0, 0, 0, 0.14));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.nk-btn:hover:not(:disabled) {
+  background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.1));
+}
+
+.nk-settlement-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  box-shadow: var(--nk-shadow-card);
+  padding: 12px 14px;
+  transition: border-color 0.15s;
+}
+
+.nk-settlement-card:hover { border-color: var(--nk-border-light); }
+
+.nk-settlement-card.is-capital {
+  border-color: var(--nk-gold);
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+}
+
+.nk-settlement-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.nk-capital-crown {
+  color: var(--nk-gold);
+  font-size: 1.1em;
+  flex-shrink: 0;
+  text-shadow: 0 0 6px rgba(201, 168, 76, 0.6);
+}
+
+.nk-capital-crown.hidden { display: none; }
+
+.nk-settlement-name {
+  flex: 1;
+  min-width: 140px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--nk-border);
+  color: var(--nk-gold-light);
+  font-family: inherit;
+  font-size: 1.05em;
+  font-weight: 700;
+  padding: 2px 4px;
+}
+
+.nk-settlement-name:focus {
+  outline: none;
+  border-bottom-color: var(--nk-primary);
+}
+
+.nk-settlement-stage {
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  font-family: inherit;
+  font-size: 0.88em;
+  font-weight: 600;
+  padding: 3px 7px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.nk-capital-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--nk-gold-light);
+  font-size: 0.85em;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nk-capital-label input[type=radio] {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  width: 13px;
+  height: 13px;
+  margin: 0;
+  padding: 0;
+  border: 2px solid var(--nk-border-light);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  vertical-align: middle;
+}
+.nk-capital-label input[type=radio]::before,
+.nk-capital-label input[type=radio]::after { content: none !important; display: none !important; }
+.nk-capital-label input[type=radio]:hover { border-color: var(--nk-gold-light); }
+.nk-capital-label input[type=radio]:checked { border-color: var(--nk-gold); background: var(--nk-gold); }
+
+.nk-settlement-details {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 8px;
+}
+
+.nk-settlement-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.nk-settlement-field--pop {
+  flex: 0 0 130px;
+  min-width: unset;
+}
+
+.nk-settlement-field label {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nk-settlement-pop {
+  width: 90px !important;
+}
+
+.nk-settlement-people,
+.nk-settlement-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nk-settlement-people label,
+.nk-settlement-notes label {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Settlement development progress ───────────────────────────────────── */
+.nk-settlement-progress {
+  margin-bottom: 10px;
+  padding: 10px 0 6px;
+  border-top: 1px solid var(--nk-border);
+}
+
+.nk-progress-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.nk-progress-header label {
+  color: var(--nk-text-muted);
+  font-size: 0.82em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.nk-progress-label {
+  color: var(--nk-text);
+  font-size: 0.85em;
+  flex: 1;
+}
+
+.nk-segments-input {
+  width: 60px !important;
+  text-align: center;
+}
+
+.nk-progress-bar-track {
+  height: 10px;
+  background: var(--nk-seg-empty);
+  border: 1px solid var(--nk-border);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.nk-progress-bar-fill {
+  height: 100%;
+  background: var(--nk-primary);
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.nk-progress-bar-fill.ready {
+  background: var(--nk-gold);
+  box-shadow: 0 0 6px rgba(201, 168, 76, 0.5);
+}
+
+.nk-progress-actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.nk-settlement-max {
+  color: var(--nk-gold);
+  font-size: 0.85em;
+  font-style: italic;
+  margin: 6px 0;
+}
+
+.nk-settlement-add {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--nk-border);
+}
+
+.nk-settlement-notes {
+  margin-top: 8px;
+}
+
+/* ─── Camping Sheet ──────────────────────────────────────────────────────── */
+
+.narrative-camping .window-content {
+  padding: 0;
+  overflow-y: auto;
+  background: var(--nk-bg);
+  color: var(--nk-text);
+}
+
+.nk-camping-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 12px;
+}
+
+/* Sections */
+.nk-camp-section {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.nk-camp-section-watch {
+  border-color: var(--nk-primary-dim);
+  background: color-mix(in srgb, var(--nk-bg-card) 85%, var(--nk-deep));
+}
+
+.nk-camp-heading {
+  margin: 0 0 10px 0;
+  font-size: 0.95em;
+  font-weight: 700;
+  color: var(--nk-gold-light);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-bottom: 1px solid var(--nk-border);
+  padding-bottom: 6px;
+}
+
+.nk-camp-heading i {
+  color: var(--nk-primary);
+}
+
+.nk-camp-dc-inline {
+  margin-left: auto;
+  font-size: 0.82em;
+  font-weight: 400;
+  color: var(--nk-text-muted);
+}
+
+.nk-camp-dc-inline strong {
+  color: var(--nk-gold);
+}
+
+.nk-camp-time-note {
+  font-size: 0.78em;
+  font-weight: 400;
+  opacity: 0.55;
+  margin-left: 5px;
+  white-space: nowrap;
+}
+
+.nk-camp-gm-badge {
+  margin-left: 6px;
+  font-size: 0.72em;
+  font-weight: 500;
+  color: var(--nk-text-dim);
+  border: 1px solid var(--nk-border);
+  border-radius: 10px;
+  padding: 1px 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+/* Participants drop zone */
+.nk-camp-drop-zone {
+  min-height: 52px;
+  border: 2px dashed var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 6px;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.nk-camp-drop-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nk-camp-drop-zone.nk-drag-over {
+  border-color: var(--nk-primary);
+  background: var(--nk-primary-glow);
+}
+
+.nk-camp-drop-hint {
+  color: var(--nk-text-dim);
+  font-size: 0.82em;
+  text-align: center;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Participant list */
+.nk-camp-participants {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.nk-camp-participant {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: 32px;
+  box-sizing: border-box;
+  gap: 6px;
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border);
+  border-radius: 20px;
+  padding: 3px 8px 3px 4px;
+}
+
+.nk-camp-avatar {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  max-width: 24px;
+  min-height: 24px;
+  max-height: 24px;
+  flex: 0 0 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--nk-border-light);
+}
+
+.nk-camp-participant-name {
+  font-size: 0.85em;
+  color: var(--nk-text);
+}
+
+.nk-camp-remove-btn {
+  background: none;
+  border: none;
+  color: var(--nk-text-dim);
+  cursor: pointer;
+  padding: 0 2px;
+  font-size: 0.75em;
+  line-height: 1;
+  transition: color 0.1s;
+}
+
+.nk-camp-remove-btn:hover {
+  color: var(--nk-red);
+}
+
+/* Zone row */
+.nk-camp-zone-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nk-camp-dc-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.nk-camp-dc-badge {
+  flex: 1;
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 5px 10px;
+  font-size: 0.82em;
+  text-align: center;
+  color: var(--nk-text-muted);
+}
+
+.nk-camp-dc-badge strong {
+  color: var(--nk-gold);
+  font-size: 1.05em;
+}
+
+.nk-camp-dc-encounter strong {
+  color: var(--nk-red);
+}
+
+/* Roll rows */
+.nk-camp-roll-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.nk-camp-label {
+  font-size: 0.8em;
+  color: var(--nk-text-muted);
+  min-width: 64px;
+  flex-shrink: 0;
+}
+
+.nk-camp-select {
+  flex: 1;
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  color: var(--nk-text);
+  padding: 4px 6px;
+  font-size: 0.85em;
+}
+
+.nk-camp-select-zone {
+  width: 100%;
+}
+
+.nk-camp-select:focus {
+  border-color: var(--nk-primary);
+  outline: none;
+}
+
+/* Outcomes hint */
+.nk-camp-outcomes-hint {
+  font-size: 0.75em;
+  color: var(--nk-text);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+
+.nk-camp-warn {
+  font-size: 0.8em;
+  color: var(--nk-orange);
+  margin: 0 0 8px 0;
+}
+
+/* Roll buttons */
+.nk-camp-roll-btn {
+  width: 100%;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, var(--nk-primary) 0%, var(--nk-primary-dim) 100%);
+  border: 1px solid var(--nk-primary);
+  border-radius: var(--nk-radius);
+  color: #fff;
+  font-size: 0.9em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.nk-camp-roll-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}
+
+.nk-camp-roll-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nk-camp-roll-btn-watch {
+  background: linear-gradient(180deg, #2a3a6a 0%, #1a2a55 100%);
+  border-color: #3a4a8a;
+}
+
+.nk-camp-roll-btn-encounter {
+  background: linear-gradient(180deg, #5a2a0a 0%, #3a1a06 100%);
+  border-color: #8a4a1a;
+  margin-top: 6px;
+}
+
+/* Night watch toggle + rest time */
+.nk-camp-watch-row {
+  margin-bottom: 8px;
+}
+
+.nk-camp-watch-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 0.88em;
+  color: var(--nk-text);
+  user-select: none;
+}
+
+.nk-camp-watch-label input[type=checkbox] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--nk-primary);
+  cursor: pointer;
+}
+
+.nk-camp-rest-display {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--nk-bg-elevated);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius);
+  padding: 7px 10px;
+  font-size: 0.88em;
+  color: var(--nk-text-muted);
+  margin-bottom: 10px;
+}
+
+.nk-camp-rest-display i {
+  color: var(--nk-primary-dim);
+}
+
+.nk-camp-rest-display strong {
+  color: var(--nk-gold);
+  font-size: 1.05em;
+}
+
+.nk-camp-rest-note {
+  font-size: 0.85em;
+  color: var(--nk-text-dim);
+  font-style: italic;
+}
+
+.nk-camp-gm-divider {
+  border-top: 1px dashed var(--nk-border);
+  margin: 8px 0 10px;
+}
+
+/* Chat message cards */
+.nk-camp-chat {
+  font-family: "Signika", serif;
+  font-size: 0.9em;
+  border-radius: var(--nk-radius);
+  overflow: hidden;
+}
+
+.nk-camp-chat-header {
+  background: var(--nk-deep);
+  color: var(--nk-gold-light);
+  padding: 4px 8px;
+  font-weight: 700;
+  font-size: 0.9em;
+}
+
+.nk-camp-outcome {
+  padding: 6px 8px;
+  font-size: 0.88em;
+  color: var(--nk-text);
+}
+
+/* degree label colours */
+.nk-crit-success { color: #5cb85c; }
+.nk-success      { color: #8ecf5a; }
+.nk-failure      { color: var(--nk-orange); }
+.nk-crit-failure { color: var(--nk-red); }
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────── */
+.nk-tab-bar {
+  display: flex;
+  gap: 4px;
+  padding: 6px 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  margin-bottom: 4px;
+}
+
+.nk-tab-btn {
+  flex: 1;
+  padding: 5px 10px;
+  font-size: 0.82em;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 4px 4px 0 0;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-bottom: none;
+  background: rgba(255,255,255,0.05);
+  color: var(--nk-text);
+  opacity: 0.65;
+  transition: opacity 0.15s, background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.nk-tab-btn:hover  { opacity: 0.85; }
+.nk-tab-active     { opacity: 1 !important; background: rgba(255,255,255,0.12) !important; }
+
+/* ── Travel tab ───────────────────────────────────────────────────────────── */
+.nk-travel-speed-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.88em;
+}
+
+.nk-travel-inferred { color: var(--nk-text); }
+
+.nk-travel-override-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85em;
+  opacity: 0.75;
+}
+
+.nk-travel-speed-input {
+  width: 54px;
+  padding: 2px 5px;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 3px;
+  color: var(--nk-text);
+  text-align: center;
+}
+
+.nk-travel-apd {
+  margin-top: 6px;
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+
+.nk-travel-terrain-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nk-travel-check-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.nk-travel-cost-row {
+  margin-top: 6px;
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+
+/* Activity pips */
+.nk-travel-pips {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.nk-travel-pip {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.05);
+  display: inline-block;
+}
+
+.nk-travel-pip-filled {
+  background: var(--nk-gold, #c9a84c);
+  border-color: var(--nk-gold, #c9a84c);
+}
+
+.nk-travel-pip-label {
+  font-size: 0.8em;
+  opacity: 0.65;
+  margin-bottom: 6px;
+}
+
+/* Day / Hex counters */
+.nk-travel-counters {
+  display: flex;
+  gap: 16px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Session-2 fixes: distinguishable project segments, turn-tab pips, project
+   DC selector, turn-tab events, per-day acted state, camping notes/rest.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* Problem: make project clock segments more distinguishable */
+.nk-segment {
+  position: relative;
+}
+/* Stronger empty/filled contrast */
+.nk-segment:not(.filled):not(.green):not(.red) {
+  background: var(--nk-seg-empty, #1c1c1c);
+  border-style: dashed;
+  border-color: var(--nk-border-light, #555);
+}
+.nk-segment.filled {
+  background: var(--nk-seg-filled, #548433);
+  border-style: solid;
+}
+/* Visually group every 5th segment so long clocks are easier to count */
+.nk-clock-segments .nk-segment:nth-child(5n) {
+  margin-right: 12px;
+}
+.nk-clock-segments .nk-segment:last-child {
+  margin-right: 0;
+}
+
+/* ═══ Fancy — gilded segment clocks ═══ */
+/* Empty = a recessed socket */
+.nk-segment:not(.filled):not(.green):not(.red) {
+  background: radial-gradient(circle at 50% 38%, #15151a, #23232a);
+  border-style: solid;
+  border-color: var(--nk-border);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.65);
+}
+/* Filled / green / red = domed, glossy gems with an outer glow */
+.nk-segment.filled {
+  background: radial-gradient(circle at 38% 30%, #a9e485 0%, var(--nk-seg-filled) 58%, #35602a 100%);
+  border-color: var(--nk-primary);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), inset 0 -2px 3px rgba(0, 0, 0, 0.35), 0 0 8px rgba(84, 132, 51, 0.6);
+}
+.nk-segment.green {
+  background: radial-gradient(circle at 38% 30%, #b6f0b6 0%, var(--nk-green) 58%, #2c6b2c 100%);
+  border-color: #3a8a3a;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), inset 0 -2px 3px rgba(0, 0, 0, 0.3), 0 0 8px rgba(92, 184, 92, 0.55);
+}
+.nk-segment.red {
+  background: radial-gradient(circle at 38% 30%, #f6b0b0 0%, var(--nk-red) 58%, #832121 100%);
+  border-color: #a03030;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), inset 0 -2px 3px rgba(0, 0, 0, 0.3), 0 0 8px rgba(224, 82, 82, 0.55);
+}
+
+/* ═══ Fancy — Kingdom Turn tab ═══ */
+/* Turn header as a gilded banner with a Modesto turn number */
+.nk-turn-header {
+  padding: 8px 14px;
+  background: linear-gradient(180deg, var(--nk-bg-elevated), var(--nk-bg-card));
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-gold);
+  border-radius: var(--nk-radius);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.nk-turn-header > label {
+  text-transform: uppercase; font-size: 0.68em; letter-spacing: 0.06em;
+  color: var(--nk-text-muted); font-weight: 700;
+}
+.nk-turn-number {
+  font-family: "Modesto Condensed", "Signika", serif;
+  font-size: 1.55em; font-weight: 600; letter-spacing: 0.03em;
+  color: var(--nk-gold-light); margin-right: auto;
+}
+
+/* Phase blocks get a faint top light */
+.nk-phase-block { background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 30%); }
+.nk-phase-header h3 { font-size: 1.15em; }
+
+/* Phase number → a gilded medallion */
+.nk-phase-num {
+  background: radial-gradient(circle at 40% 30%, var(--nk-bg-elevated), var(--nk-primary-dim));
+  border: 1px solid var(--nk-primary-dim);
+  color: var(--nk-gold-light);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+.nk-phase-block.active .nk-phase-num {
+  background: radial-gradient(circle at 40% 30%, #93d374, var(--nk-primary) 65%, #2f5f22);
+  border-color: var(--nk-primary);
+  color: #10240a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4), 0 0 8px var(--nk-primary-glow);
+}
+.nk-phase-block.done .nk-phase-num {
+  background: radial-gradient(circle at 40% 30%, #6f8f5f, #3a5230);
+  color: var(--nk-text);
+}
+
+/* Gild the day pips */
+.nk-day-pip { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5); }
+.nk-day-pip.filled {
+  background: linear-gradient(180deg, #7cbf5f, var(--nk-primary));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+.nk-day-pip.current {
+  background: linear-gradient(180deg, var(--nk-gold-light), var(--nk-gold));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 0 6px rgba(201, 168, 76, 0.6);
+}
+
+/* Skill field spans the row; the difficulty selector moved up beside the clock. */
+.nk-project-skill-label { flex: 1 1 100%; }
+.nk-project-actions input.nk-project-skill-input {
+  flex: 1;
+  width: auto;
+  min-width: 160px;
+  max-width: 100%;
+}
+
+/* Clock row: segments on the left, Difficulty + DC badge on the right. */
+.nk-clock-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 10px 0;
+}
+.nk-clock-row .nk-clock { margin: 0; }
+.nk-project-difficulty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+.nk-project-dc-label { display: flex; align-items: center; gap: 5px; }
+
+/* Problem: per-project DC difficulty selector + effective DC badge */
+.nk-project-dc-label .nk-project-dc-select {
+  background: var(--nk-bg, #161616);
+  border: 1px solid var(--nk-border, #444);
+  border-radius: var(--nk-radius, 4px);
+  color: var(--nk-text, #e0e0e0);
+  font-family: inherit;
+  font-size: 0.9em;
+  padding: 3px 6px;
+}
+.nk-project-dc-badge {
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid var(--nk-gold, #c9a84c);
+  color: var(--nk-gold-light, #e6cf8a);
+  border-radius: var(--nk-radius, 4px);
+  font-size: 0.8em;
+  font-weight: 700;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+/* Problem: turn-tab project rows — header, pips, DC + skill chips */
+.nk-day-leader-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.nk-day-leader-head h4 { margin: 0; }
+.nk-day-leader.acted { opacity: 0.7; }
+
+.nk-day-acted-badge {
+  font-size: 0.78em;
+  font-weight: 700;
+  color: var(--nk-green, #5cb85c);
+  background: rgba(92, 184, 92, 0.12);
+  border: 1px solid rgba(92, 184, 92, 0.4);
+  border-radius: var(--nk-radius, 4px);
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.nk-day-project-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+  min-width: 140px;
+}
+.nk-day-project-dc, .nk-event-dc {
+  font-size: 0.76em;
+  font-weight: 700;
+  color: var(--nk-gold-light, #e6cf8a);
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.4);
+  border-radius: var(--nk-radius, 4px);
+  padding: 1px 6px;
+  white-space: nowrap;
+}
+.nk-day-project-skill {
+  font-size: 0.76em;
+  color: var(--nk-blue, #4a9fd4);
+  background: rgba(74, 159, 212, 0.1);
+  border: 1px solid rgba(74, 159, 212, 0.4);
+  border-radius: var(--nk-radius, 4px);
+  padding: 1px 6px;
+  max-width: 100%;
+  overflow-wrap: anywhere;   /* wrap long multi-skill lists instead of overflowing the card */
+}
+
+/* Problem: show pips instead of numeric progress in the turn tab */
+.nk-mini-pips {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-wrap: wrap;
+}
+.nk-mini-pip {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--nk-seg-empty, #1c1c1c);
+  border: 1px solid var(--nk-border-light, #555);
+}
+.nk-mini-pip.filled {
+  background: var(--nk-seg-filled, #548433);
+  border-color: var(--nk-primary, #548433);
+}
+.nk-mini-pips .nk-mini-pip:nth-child(5n) { margin-right: 6px; }
+
+/* Problem: kingdom events progress shown in the turn tab */
+.nk-turn-events {
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--nk-border, #444);
+}
+.nk-turn-events-title {
+  color: var(--nk-gold-light, #e6cf8a);
+  margin: 0 0 8px;
+}
+.nk-turn-event {
+  background: var(--nk-bg-card, #1e1e1e);
+  border: 1px solid var(--nk-border, #444);
+  border-radius: var(--nk-radius, 4px);
+  padding: 8px 12px;
+  margin-bottom: 8px;
+}
+.nk-turn-event-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.nk-turn-event-name { font-weight: 700; color: var(--nk-gold-light, #e6cf8a); }
+.nk-turn-event-progress { margin-left: auto; font-size: 0.82em; color: var(--nk-text-muted, #999); white-space: nowrap; }
+.nk-turn-event-desc { font-size: 0.86em; margin: 6px 0; }
+.nk-turn-event-checks {
+  list-style: none;
+  margin: 6px 0;
+  padding: 0;
+  font-size: 0.84em;
+}
+.nk-turn-event-checks li { margin: 2px 0; }
+
+/* Problem: event notes in history */
+.nk-history-event-notes {
+  font-size: 0.85em;
+  font-style: italic;
+  color: var(--nk-text-muted, #999);
+  margin: 4px 0 0;
+}
+
+/* Problem: camping cook ration note + rest button */
+.nk-camp-ration-note {
+  font-size: 0.84em;
+  color: var(--nk-gold-light, #e6cf8a);
+  margin: 6px 0;
+}
+.nk-camp-rest-btn {
+  margin-top: 8px;
+}
+
+
+.nk-travel-counter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.88em;
+}
+
+.nk-travel-counter-label {
+  opacity: 0.7;
+  min-width: 90px;
+}
+
+.nk-travel-counter-val {
+  min-width: 24px;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+.nk-travel-counter-btn {
+  padding: 1px 6px;
+  font-size: 0.78em;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.07);
+  color: var(--nk-text);
+  line-height: 1.5;
+}
+.nk-travel-counter-btn:hover { background: rgba(255,255,255,0.14); }
+
+/* New Night button */
+.nk-camp-section-new-night {
+  padding-top: 6px;
+}
+
+.nk-camp-new-night-btn {
+  width: 100%;
+  padding: 7px 12px;
+  font-size: 0.85em;
+  font-family: inherit;
+  cursor: pointer;
+  border-radius: 4px;
+  border: 1px solid #6a4a1a;
+  background: linear-gradient(180deg, #4a2e0a 0%, #3a2008 100%);
+  color: #e8c87a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+}
+
+.nk-camp-new-night-btn:hover {
+  opacity: 1;
+}
+
+/* Clear party button (inline in heading) */
+.nk-camp-clear-party-btn {
+  margin-left: auto;
+  padding: 2px 7px;
+  font-size: 0.75em;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 1px solid #6a2a2a;
+  background: rgba(100, 30, 30, 0.5);
+  color: #e07070;
+  line-height: 1.4;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+.nk-camp-clear-party-btn:hover { opacity: 1; }
+
+.nk-settlement-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid var(--nk-border);
+}
+
+/* ─── Notes Tab ───────────────────────────────────────────────────────────── */
+
+.nk-notes-tab .nk-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 6px;
+}
+
+.nk-notes-tab .nk-section-header h2 { margin: 0; }
+
+.nk-kingdom-notes-field {
+  margin-bottom: 6px;
+}
+
+.nk-kingdom-notes-field .nk-notes-display,
+.nk-kingdom-notes-field .nk-notes-textarea {
+  min-height: 80px;
+}
+
+.nk-effects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.nk-effect-card {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  box-shadow: var(--nk-shadow-card);
+  padding: 10px 12px;
+  transition: border-color 0.15s;
+}
+
+.nk-effect-card:hover { border-color: var(--nk-border-light); }
+
+.nk-effect-card.expiring {
+  border-color: var(--nk-orange);
+  box-shadow: 0 0 0 1px rgba(224, 124, 32, 0.25);
+}
+
+.nk-effect-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.nk-effect-name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  color: var(--nk-gold-light);
+}
+
+.nk-effect-expiry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82em;
+  color: var(--nk-text-muted);
+  white-space: nowrap;
+}
+
+.nk-effect-expiry .nk-short-input {
+  width: 52px;
+}
+
+.nk-effect-footer {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nk-expiry-badge {
+  font-size: 0.78em;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  color: var(--nk-text-muted);
+}
+
+.nk-expiry-badge.warning {
+  background: rgba(224, 124, 32, 0.15);
+  border-color: var(--nk-orange);
+  color: var(--nk-orange);
+  font-weight: 600;
+}
+
+.nk-expiry-badge.permanent {
+  color: var(--nk-gold-light);
+  border-color: var(--nk-gold-light);
+  background: rgba(232, 201, 122, 0.08);
+}
+
+/* ─── Settings Tab ────────────────────────────────────────────────────────── */
+
+.nk-settings-group {
+  background: var(--nk-bg-card);
+  border: 1px solid var(--nk-border);
+  border-radius: var(--nk-radius-lg);
+  padding: 14px 16px;
+  margin-top: 12px;
+}
+
+.nk-settings-group h3 {
+  margin: 0 0 12px;
+  font-size: 0.95em;
+  color: var(--nk-gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nk-setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid var(--nk-border);
+}
+
+.nk-setting-row:first-of-type { border-top: none; }
+
+.nk-setting-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.nk-setting-label label {
+  font-weight: 600;
+  color: var(--nk-text);
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.nk-setting-desc {
+  color: var(--nk-text-muted);
+  font-size: 0.8em;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Toggle switch */
+.nk-toggle {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.nk-toggle input { display: none; }
+
+.nk-toggle-track {
+  display: flex;
+  align-items: center;
+  width: 42px;
+  height: 22px;
+  background: var(--nk-bg-header);
+  border: 1px solid var(--nk-border);
+  border-radius: 11px;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.nk-toggle input:checked ~ .nk-toggle-track {
+  background: rgba(232, 201, 122, 0.25);
+  border-color: var(--nk-gold-light);
+}
+
+.nk-toggle-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--nk-text-muted);
+  border-radius: 50%;
+  margin-left: 2px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.nk-toggle input:checked ~ .nk-toggle-track .nk-toggle-thumb {
+  transform: translateX(20px);
+  background: var(--nk-gold-light);
+}
+
+/* ─── Hex Color Settings dialog ─────────────────────────────────────────── */
+.nk-hex-color-settings .window-content {
+  padding: 0.75rem 1rem 0;
+}
+
+.nk-hex-color-settings form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nk-hex-color-settings .form-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.nk-hex-color-settings .form-group > label {
+  width: 7rem;
+  flex-shrink: 0;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.nk-color-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.nk-color-controls input[type="color"] {
+  width: 2.4rem;
+  height: 2rem;
+  padding: 2px;
+  border: 1px solid var(--color-border-light, #aaa);
+  border-radius: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.nk-color-controls input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.nk-alpha-label {
+  width: 2.8rem;
+  text-align: right;
+  font-size: 0.82em;
+  color: var(--color-text-dark-secondary, #888);
+  flex-shrink: 0;
+}
+
+.nk-color-swatch {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-light, #aaa);
+  flex-shrink: 0;
+  /* checkerboard so transparency is visible */
+  background-image:
+    linear-gradient(45deg, #ccc 25%, transparent 25%),
+    linear-gradient(-45deg, #ccc 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #ccc 75%),
+    linear-gradient(-45deg, transparent 75%, #ccc 75%);
+  background-size: 8px 8px;
+  background-position: 0 0, 0 4px, 4px -4px, -4px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.nk-color-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--nk-swatch-color, transparent);
+}
+
+.nk-hex-color-settings .form-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.5rem 0 0.75rem;
+  border-top: 1px solid var(--color-border-light, #aaa);
+  margin-top: 0.25rem;
+}
+

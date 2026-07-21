@@ -1,0 +1,115 @@
+<div class="nk-kingdom-sheet">
+  <header class="nk-header">
+    <h1 class="nk-title">
+      <span class="nk-title-display">{{#if kingdom.name}}{{kingdom.name}}{{else}}Unnamed Kingdom{{/if}}</span>
+      <button type="button" class="nk-title-edit" title="Rename kingdom">✎</button>
+      <input type="text" name="name" value="{{kingdom.name}}" placeholder="Kingdom Name" class="hidden" />
+    </h1>
+    <div class="nk-topbar-stats">
+      <div class="nk-stat">
+        <span class="nk-stat-label">Level</span>
+        <span class="nk-stat-value">{{kingdom.level}}</span>
+      </div>
+      <div class="nk-stat">
+        <span class="nk-stat-label">XP</span>
+        <span class="nk-stat-value">{{kingdom.xp}}<span class="nk-stat-sub"> / {{kingdom.xpNeeded}}</span></span>
+      </div>
+      <div class="nk-stat">
+        <span class="nk-stat-label">Max Level</span>
+        <span class="nk-stat-value">{{kingdom.maxLevel}}</span>
+      </div>
+      {{#if kingdom.canLevelUp}}
+      <button type="button" class="nk-btn nk-topbar-levelup" data-action="advance-level">✦ Level Up!</button>
+      {{/if}}
+    </div>
+  </header>
+
+  <nav class="nk-tabs">
+    <div class="nk-tab-row">
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'turn')}}active{{/if}}" data-tab="turn">Kingdom Turn</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'projects')}}active{{/if}}" data-tab="projects">Projects</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'events')}}active{{/if}}" data-tab="events">Events</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'leaders')}}active{{/if}}" data-tab="leaders">Leaders</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'settlements')}}active{{/if}}" data-tab="settlements">Settlements</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'armies')}}active{{/if}}" data-tab="armies">Armies</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'relations')}}active{{/if}}" data-tab="relations">Relations</button>
+    </div>
+    <div class="nk-tab-row nk-tab-row-secondary">
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'history')}}active{{/if}}" data-tab="history">History</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'notes')}}active{{/if}}" data-tab="notes">Notes</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'benefits')}}active{{/if}}" data-tab="benefits">Benefits</button>
+      <button type="button" class="nk-tab-btn {{#if (eq activeTab 'rules')}}active{{/if}}" data-tab="rules">Rules</button>
+      {{#if isGM}}<button type="button" class="nk-tab-btn {{#if (eq activeTab 'catalog')}}active{{/if}}" data-tab="catalog">Catalog</button>{{/if}}
+      {{#if isGM}}<button type="button" class="nk-tab-btn {{#if (eq activeTab 'settings')}}active{{/if}}" data-tab="settings">Settings</button>{{/if}}
+    </div>
+  </nav>
+
+  <!-- KINGDOM TURN TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'turn')}}hidden{{/unless}}" data-tab-content="turn">
+    {{> "nk-turn-tab" kingdom=kingdom isGM=isGM}}
+  </section>
+
+  <!-- PROJECTS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'projects')}}hidden{{/unless}}" data-tab-content="projects">
+    {{> "nk-projects-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- EVENTS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'events')}}hidden{{/unless}}" data-tab-content="events">
+    {{> "nk-events-tab" kingdom=kingdom eventCatalog=eventCatalog isGM=isGM}}
+  </section>
+
+  <!-- BENEFITS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'benefits')}}hidden{{/unless}}" data-tab-content="benefits">
+    {{> "nk-benefits-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- LEADERS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'leaders')}}hidden{{/unless}}" data-tab-content="leaders">
+    {{> "nk-leaders-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- HISTORY TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'history')}}hidden{{/unless}}" data-tab-content="history">
+    {{> "nk-history-tab" turnHistory=turnHistory isGM=isGM}}
+  </section>
+
+  <!-- SETTLEMENTS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'settlements')}}hidden{{/unless}}" data-tab-content="settlements">
+    {{> "nk-settlements-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- ARMIES TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'armies')}}hidden{{/unless}}" data-tab-content="armies">
+    {{> "nk-armies-tab" armies=armies armyInfo=armyInfo}}
+  </section>
+
+  <!-- NOTES TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'notes')}}hidden{{/unless}}" data-tab-content="notes">
+    {{> "nk-notes-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- RELATIONS TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'relations')}}hidden{{/unless}}" data-tab-content="relations">
+    {{> "nk-relations-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- RULES TAB -->
+  <section class="nk-tab-content {{#unless (eq activeTab 'rules')}}hidden{{/unless}}" data-tab-content="rules">
+    {{> "nk-rules-tab" kingdom=kingdom}}
+  </section>
+
+  <!-- CATALOG TAB -->
+  {{#if isGM}}
+  <section class="nk-tab-content {{#unless (eq activeTab 'catalog')}}hidden{{/unless}}" data-tab-content="catalog">
+    {{> "nk-catalog-tab" fullCatalog=fullCatalog}}
+  </section>
+  {{/if}}
+
+  <!-- SETTINGS TAB -->
+  {{#if isGM}}
+  <section class="nk-tab-content {{#unless (eq activeTab 'settings')}}hidden{{/unless}}" data-tab-content="settings">
+    {{> "nk-settings-tab" kingdom=kingdom}}
+  </section>
+  {{/if}}
+</div>

@@ -1,0 +1,66 @@
+<div class="nk-armies-tab">
+  <h2>Armies</h2>
+
+  <div class="nk-army-command">
+    <div class="nk-acs">
+      <span class="nk-acs-label">Armies</span>
+      <span class="nk-acs-value {{#if armyInfo.atOrOver}}over{{/if}}">{{armyInfo.count}} / {{armyInfo.allowance}}</span>
+      <span class="nk-acs-sub">free allowance (settlement tiers)</span>
+    </div>
+    <div class="nk-acs">
+      <span class="nk-acs-label">Next Recruit DC</span>
+      <span class="nk-acs-value">{{armyInfo.recruitDC}}</span>
+      <span class="nk-acs-sub">{{#if armyInfo.penalty}}level DC +{{armyInfo.penalty}} (over allowance){{else}}at level DC{{/if}}</span>
+    </div>
+    <div class="nk-acs">
+      <span class="nk-acs-label">Recruit credits</span>
+      <span class="nk-acs-value">{{armyInfo.credits}}</span>
+      <span class="nk-acs-sub">earned by finishing Recruit projects</span>
+    </div>
+    <button type="button" class="nk-btn nk-recruit-btn" data-action="recruit-army" title="Start a 10-segment Recruit Army project"><i class="fa-solid fa-flag"></i> Recruit Army</button>
+  </div>
+
+  <p class="nk-hint-line">Armies level with your kingdom (<strong>{{armyInfo.kingdomLevel}}</strong>), but you will need to update them yourself. <span class="nk-hint">See the Rules tab for army endeavours.</span></p>
+
+  <div class="nk-armies-drop-zone">
+    <div class="nk-armies-list">
+      {{#each armies}}
+      <div class="nk-army-card {{#if this.actorMissing}}missing{{/if}} {{#if this.routed}}routed{{/if}}" data-army-id="{{this.id}}">
+        <div class="nk-army-header">
+          <img src="{{this.img}}" class="nk-army-portrait" alt="{{this.displayName}}" />
+          <div class="nk-army-info">
+            <button type="button" class="nk-army-name nk-btn-link" data-action="open-army-sheet" data-actor-uuid="{{this.actorUuid}}" title="Open actor sheet">{{this.displayName}}</button>
+            {{#if this.actorMissing}}<span class="nk-army-missing">⚠ Actor not found</span>{{/if}}
+            <div class="nk-army-stats">
+              {{#if this.level}}<span class="nk-army-stat {{#if this.levelMismatch}}mismatch{{/if}}"{{#if this.levelMismatch}} title="Armies fight at the kingdom's level ({{this.expectedLevel}}) — update this army's sheet"{{/if}}>Level {{this.level}}{{#if this.levelMismatch}} ⚠{{/if}}</span>{{/if}}
+              {{#if this.hpMax}}<span class="nk-army-stat {{#if this.routed}}rout-hit{{/if}}">HP {{this.hpValue}} / {{this.hpMax}}</span>{{/if}}
+              {{#if this.routThreshold}}<span class="nk-army-stat rout" title="The army routs when its HP drops to this value or below">Rout ≤ {{this.routThreshold}}</span>{{/if}}
+            </div>
+            {{#if this.hasConditions}}
+            <div class="nk-army-conditions">
+              {{#each this.conditions}}<span class="nk-army-stat condition">{{this.name}}{{#if this.value}} {{this.value}}{{/if}}</span>{{/each}}
+            </div>
+            {{/if}}
+          </div>
+          <div class="nk-army-header-actions">
+            <button type="button" class="nk-btn small icon" data-action="army-project" data-kind="move"   data-army-id="{{this.id}}" title="Move — create a 4-seg project"><i class="fa-solid fa-route"></i></button>
+            <button type="button" class="nk-btn small icon" data-action="army-project" data-kind="train"  data-army-id="{{this.id}}" title="Train — create a 6-seg project (then add/change a feat)"><i class="fa-solid fa-dumbbell"></i></button>
+            <button type="button" class="nk-btn small icon" data-action="army-project" data-kind="outfit" data-army-id="{{this.id}}" title="Outfit — create a 6-seg project (then add gear)"><i class="fa-solid fa-screwdriver-wrench"></i></button>
+            <button type="button" class="nk-btn danger small icon" data-action="remove-army" data-army-id="{{this.id}}" title="Remove from roster">✕</button>
+          </div>
+        </div>
+        <div class="nk-army-notes nk-notes-field">
+          <div class="nk-notes-display {{#unless this.notes}}empty{{/unless}}" title="Click to edit">{{{this.notesEnriched}}}</div>
+          <textarea name="army-notes-{{this.id}}" class="nk-notes-textarea hidden" placeholder="Notes, deployment, orders…">{{this.notes}}</textarea>
+        </div>
+      </div>
+      {{else}}
+      <p class="nk-empty">No armies linked yet.</p>
+      {{/each}}
+    </div>
+    <div class="nk-drop-hint">
+      <i class="fa-solid fa-shield-halved"></i>
+      Drop an Army actor here to add it — {{#if armyInfo.credits}}uses 1 recruit credit{{else}}needs a completed recruit (GM can override){{/if}}
+    </div>
+  </div>
+</div>
