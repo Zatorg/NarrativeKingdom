@@ -7,8 +7,10 @@
   {{#if kingdom.factions.length}}
   <div class="nk-factions-list">
     {{#each kingdom.factions}}
-    <div class="nk-faction-card standing-{{this.standingKey}}" data-faction-id="{{this.id}}">
+    {{#if this.expanded}}
+    <div class="nk-faction-card expanded standing-{{this.standingKey}}" data-faction-id="{{this.id}}">
       <div class="nk-faction-header">
+        <button type="button" class="nk-faction-toggle nk-faction-collapse" data-faction-id="{{this.id}}" title="Collapse">▾</button>
         <input type="text" name="faction-name-{{this.id}}" value="{{this.name}}" placeholder="Faction name" class="nk-faction-name" />
         <span class="nk-standing-badge standing-{{this.standingKey}}" title="PF2e reputation standing ({{this.reputation}})">{{this.standingLabel}} · {{this.reputation}}</span>
         <button type="button" class="nk-btn danger small" data-action="remove-faction" data-faction-id="{{this.id}}">✕</button>
@@ -51,6 +53,18 @@
         {{/if}}
       </div>
     </div>
+    {{else}}
+    <div class="nk-faction-compact nk-faction-toggle standing-{{this.standingKey}}" data-faction-id="{{this.id}}" title="Click to expand">
+      <div class="nk-compact-head">
+        <span class="nk-compact-name">{{this.name}}</span>
+        <span class="nk-standing-badge standing-{{this.standingKey}}" title="PF2e reputation standing">{{this.standingLabel}} · {{this.reputation}}</span>
+      </div>
+      <div class="nk-compact-meta">
+        {{#if this.relationType}}<span title="Relation type">🤝 {{this.relationType}}</span>{{/if}}
+        {{#if this.history.length}}<span title="History entries">📜 {{this.history.length}}</span>{{/if}}
+      </div>
+    </div>
+    {{/if}}
     {{/each}}
   </div>
   {{else}}

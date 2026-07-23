@@ -1449,7 +1449,29 @@
 .nk-hint-line { font-size: 0.82em; color: var(--nk-text-muted); margin: 0 0 10px; }
 
 /* ── Relations / Factions tab ────────────────────────────────────────────── */
-.nk-factions-list { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+.nk-factions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+  align-items: start;
+  margin-top: 10px;
+}
+.nk-faction-card.expanded { grid-column: 1 / -1; }
+
+.nk-faction-compact {
+  border: 1px solid var(--nk-border);
+  border-left: 3px solid var(--nk-border-light);
+  border-radius: var(--nk-radius);
+  background: var(--nk-bg-card);
+  padding: 9px 11px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.nk-faction-compact:hover { border-color: var(--nk-primary); background: var(--nk-bg-elevated); }
+
+.nk-faction-collapse { background: none; border: none; color: var(--nk-text-muted); cursor: pointer; font-size: 1em; padding: 0 4px; line-height: 1; }
+.nk-faction-collapse:hover { color: var(--nk-text); }
+
 .nk-faction-card {
   border: 1px solid var(--nk-border);
   border-left: 3px solid var(--nk-border-light);
@@ -1480,13 +1502,13 @@
   font-size: 0.76em; font-weight: 700; padding: 2px 9px; border-radius: 10px;
   white-space: nowrap; border: 1px solid transparent; text-transform: uppercase; letter-spacing: 0.03em;
 }
-.nk-faction-card.standing-revered  { border-left-color: #6abf6a; }
-.nk-faction-card.standing-admired  { border-left-color: #6aa84f; }
-.nk-faction-card.standing-liked    { border-left-color: #a5c66a; }
-.nk-faction-card.standing-ignored  { border-left-color: #6a6a74; }
-.nk-faction-card.standing-disliked { border-left-color: #e0a020; }
-.nk-faction-card.standing-hated    { border-left-color: #e07c20; }
-.nk-faction-card.standing-hunted   { border-left-color: #e05252; }
+.nk-faction-card.standing-revered,  .nk-faction-compact.standing-revered  { border-left-color: #6abf6a; }
+.nk-faction-card.standing-admired,  .nk-faction-compact.standing-admired  { border-left-color: #6aa84f; }
+.nk-faction-card.standing-liked,    .nk-faction-compact.standing-liked    { border-left-color: #a5c66a; }
+.nk-faction-card.standing-ignored,  .nk-faction-compact.standing-ignored  { border-left-color: #6a6a74; }
+.nk-faction-card.standing-disliked, .nk-faction-compact.standing-disliked { border-left-color: #e0a020; }
+.nk-faction-card.standing-hated,    .nk-faction-compact.standing-hated    { border-left-color: #e07c20; }
+.nk-faction-card.standing-hunted,   .nk-faction-compact.standing-hunted   { border-left-color: #e05252; }
 .nk-standing-badge.standing-revered  { color: #bff0b5; background: rgba(106,191,106,0.16); border-color: #6abf6a; }
 .nk-standing-badge.standing-admired  { color: #c3e2ad; background: rgba(106,168,79,0.16);  border-color: #6aa84f; }
 .nk-standing-badge.standing-liked    { color: #dcecb6; background: rgba(165,198,106,0.15); border-color: #a5c66a; }
@@ -1857,7 +1879,7 @@
 /* Cards catch a faint top light + a little more depth (tome-page feel) */
 .nk-project-card, .nk-event-card, .nk-leader-card, .nk-faction-card,
 .nk-settlement-card, .nk-effect-card, .nk-rule-section, .nk-army-command,
-.nk-turn-tracker, .nk-settlement-compact {
+.nk-turn-tracker, .nk-settlement-compact, .nk-faction-compact {
   background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
 }

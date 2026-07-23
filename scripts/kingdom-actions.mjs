@@ -891,14 +891,16 @@ export async function onAddFaction() {
     const app = /** @type {KingdomApplication} */ (this);
     const kingdom = foundry.utils.deepClone(app.kingdom);
     kingdom.factions ??= [];
+    const id = foundry.utils.randomID();
     kingdom.factions.push({
-      id: foundry.utils.randomID(),
+      id,
       name: "New Faction",
       relationType: "",
       reputation: 0,
       notes: "",
       history: [],
     });
+    app.expandedFactions.add(id); // open the editor for the new faction right away
     await app.saveKingdom(kingdom);
   }
 

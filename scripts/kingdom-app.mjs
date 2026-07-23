@@ -133,6 +133,9 @@ export class KingdomApplication extends foundry.applications.api.ApplicationV2 {
   /** Client-side view state: settlement indices currently expanded to full detail. */
   expandedSettlements = new Set();
 
+  /** Client-side view state: faction ids currently expanded to full detail. */
+  expandedFactions = new Set();
+
   /** Last font-scale percentage applied via setPosition — avoids resizing the window
    *  (and clobbering a user's manual resize) on every save/render. */
   #lastFontPct = null;
@@ -406,7 +409,10 @@ export class KingdomApplication extends foundry.applications.api.ApplicationV2 {
     const factions = (kingdom.factions ?? []).map(f => {
       const rep = clampReputation(f.reputation ?? 0);
       const standing = factionStanding(rep);
-      return { ...f, reputation: rep, standingKey: standing.key, standingLabel: standing.label, history: f.history ?? [] };
+      return {
+        ...f, reputation: rep, standingKey: standing.key, standingLabel: standing.label,
+        history: f.history ?? [], expanded: this.expandedFactions.has(f.id),
+      };
     });
 
     return {
@@ -519,6 +525,18 @@ export class KingdomApplication extends foundry.applications.api.ApplicationV2 {
         if (Number.isNaN(idx)) return;
         if (this.expandedSettlements.has(idx)) this.expandedSettlements.delete(idx);
         else this.expandedSettlements.add(idx);
+        this.render();
+      });
+    });
+
+    // Faction cards: expand/collapse (client-side view state)
+    html.querySelectorAll(".nk-faction-toggle").forEach(el => {
+      el.addEventListener("click", ev => {
+        ev.preventDefault();
+        const id = ev.currentTarget.dataset.factionId;
+        if (!id) return;
+        if (this.expandedFactions.has(id)) this.expandedFactions.delete(id);
+        else this.expandedFactions.add(id);
         this.render();
       });
     });
